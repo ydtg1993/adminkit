@@ -50,7 +50,7 @@
             var description = $(this).parent().find('input[name="description"]').val();
             var view = $(this).parent().find('input[name="view"]').val();
 
-            var url = '{{url(ADMIN_URI.'/Auth.upMenu')}}';
+            var url = '{{url('/Auth.upMenu')}}';
             var data = {
                 '_token': '{{csrf_token()}}',
                 'id': id,

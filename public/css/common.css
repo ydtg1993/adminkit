@@ -404,4 +404,15 @@ p{
     margin: 5px 0 5px 5px;
 }
 
+.tm-sidebar-left {
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    box-sizing: border-box;
+    width: 240px !important;
+    padding: 40px 40px 60px 40px;
+    border-right: 1px #e5e5e5 solid;
+    overflow: auto;
+}
+
 
