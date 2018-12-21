@@ -1,10 +1,10 @@
-@extends('layouts.master')
+@extends('layouts/common')
 
 @section('title', 'jinono')
 
-@section('container')
+@section('content')
 
-<div style="padding: 10px">
+
             @foreach($list as $class_name=>$data)
                 <div class="box" data-id="{{current($data)['id']}}">
                     <div class="box-header">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             @endforeach
-</div>
+
     <script>
         $('.form-control').blur(function () {
             var id = $(this).parent().parent().attr('data-id');
@@ -50,7 +50,7 @@
             var description = $(this).parent().find('input[name="description"]').val();
             var view = $(this).parent().find('input[name="view"]').val();
 
-            var url = '{{url('/Auth.upMenu')}}';
+            var url = '{{url(ADMIN_URI.'/Auth.upMenu')}}';
             var data = {
                 '_token': '{{csrf_token()}}',
                 'id': id,
@@ -59,7 +59,7 @@
                 'description': description,
                 'view': view,
             };
-            jinono.requestEvent.apply(url,data);
+            requestEvent.apply(url,data);
         });
     </script>
 @stop

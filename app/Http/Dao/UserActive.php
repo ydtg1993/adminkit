@@ -26,7 +26,7 @@ class UserActive
         $active_token = Func::createToken();
 
         Cookie::queue('active_token',$active_token,TIME + 86400);
-        $cache_key = RedisDriver::getInstance()->getCacheKey('active.admin_user', $active_token);
+        $cache_key = RedisDriver::getInstance()->getCacheKey('active.user', $active_token);
         User::upInfoInWhere(['last_login_time'=>NOW_DATE]);
         return (boolean)RedisDriver::getInstance()->redis->setex($cache_key, 3600, json_encode($user_info));
     }
@@ -43,7 +43,7 @@ class UserActive
             return false;
         }
 
-        $cache_key = RedisDriver::getInstance()->getCacheKey('active.admin_user', $active_token);
+        $cache_key = RedisDriver::getInstance()->getCacheKey('active.user', $active_token);
         $user_info = RedisDriver::getInstance()->redis->get($cache_key);
 
         if ($user_info == null) {
@@ -67,7 +67,7 @@ class UserActive
     {
         $active_token = Cookie::get('active_token');
         Cookie::forget('active_token');
-        $cache_key = RedisDriver::getInstance()->getCacheKey('active.admin_user', $active_token);
+        $cache_key = RedisDriver::getInstance()->getCacheKey('active.user', $active_token);
         return (boolean)RedisDriver::getInstance()->redis->del($cache_key);
     }
 }

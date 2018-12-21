@@ -11,15 +11,10 @@
 |
 */
 
-Route::match(['get','post'],'/login', 'Admin@login');
+$router->match(['get','post'],'/login', 'Auth@login');
 
-$router->group(['middleware' => 'CheckAdminLogin'], function ($router) {
-    $router->match(['get'],'/', 'Admin@index');
-
-    $router->get('/Managers.list', 'ManagerController@list');
-
-    $router->get('/Admin.index', 'Admin@index');
-    $router->get('Admin@index');
+$router->group(['middleware' => 'CheckAdminLogin'], function () use ($router) {
+    $router->get('/', 'Auth@index');
 
     $router->get('/Auth.menu', 'Auth@menu');
     $router->post('/Auth.upMenu', 'Auth@upMenu');

@@ -4,7 +4,6 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,13 +48,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof ValidationException){
-            info($exception->getMessage());
-            return response(['id' => 'invalid_params', 'message' => array_collapse($exception->errors())], 422);
-        }
-        if($exception instanceof \InvalidArgumentException){
-            return response(['id' => 'service_unavailable'], 503);
-        }
         return parent::render($request, $exception);
     }
 }

@@ -40,34 +40,18 @@ return [
         ],
 
         'mysql' => [
-            'admin' => [
-                'driver' => 'mysql',
-                'host' => env('DB_ADMIN_HOST', '10.0.0.9'),
-                'port' => env('DB_ADMIN_PORT', '3306'),
-                'database' => env('DB_ADMIN_DATABASE', 'wanzhuan_admin'),
-                'username' => env('DB_ADMIN_USERNAME', 'root'),
-                'password' => env('DB_ADMIN_PASSWORD', 'wzkj2018'),
-                'unix_socket' => env('DB_ADMIN_SOCKET', ''),
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix' => '',
-                'strict' => true,
-                'engine' => null,
-            ],
-            'api' => [
-                'driver' => 'mysql',
-                'host' => env('DB_API_HOST', '10.0.0.9'),
-                'port' => env('DB_API_PORT', '3306'),
-                'database' => env('DB_API_DATABASE', 'wanzhuan'),
-                'username' => env('DB_API_USERNAME', 'forge'),
-                'password' => env('DB__API_PASSWORD', ''),
-                'unix_socket' => env('DB_API_SOCKET', ''),
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix' => '',
-                'strict' => true,
-                'engine' => null,
-            ],
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
         ],
 
         'pgsql' => [
@@ -126,11 +110,9 @@ return [
 
         'default' => [
             'host' => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
-            'parameters'=>[
-                'password'=>env('REDIS_PASSWORD', '')
-            ]
         ],
 
     ],

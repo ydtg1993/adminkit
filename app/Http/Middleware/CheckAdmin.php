@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Http\Common\ResponseCode;
-use App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Dao\UserActive;
 use App\Http\Model\Permissions;
@@ -28,7 +27,7 @@ class CheckAdmin
         if(!$is_login){
             return Redirect::to('/login');
         }
-        Admin::$data['user_info'] = $user_info;
+        Controller::$data['user_info'] = $user_info;
 
         //权限检查
         $user_role = UserRole::getInfoWhere(['user_id'=>$user_info['id']]);
@@ -38,7 +37,7 @@ class CheckAdmin
 
         $request_info = $request->route()->getAction();;
         $slug = str_replace('@','.',basename($request_info['controller']));
-        Admin::$data['slug'] = $slug;
+        Controller::$data['slug'] = $slug;
         $permission = Permissions::getInfoWhere(['slug'=>$slug]);
 
         $auths = RolePermission::getAllWhere(['role_id'=>$user_role['role_id']]);
@@ -60,7 +59,7 @@ class CheckAdmin
 
         //权限导航
         $navigations = Permissions::getAllInIds(['view'=>1,'access'=>0],$auth_permission_ids);
-        Admin::$data['navigation'] = Func::group2Array($navigations->toArray(),['controller']);
+        Controller::$data['navigation'] = Func::group2Array($navigations->toArray(),['controller']);
 
 
         return $next($request);

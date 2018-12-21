@@ -8,15 +8,43 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Dao\UserActive;
 use App\Http\Model\Permissions;
 use App\Http\Model\RolePermission;
 use App\Http\Model\Roles;
+use App\Http\Model\User;
 use App\Http\Model\UserRole;
 use App\Libs\Helper\Func;
+use Illuminate\Support\Facades\Redirect;
 
-class Auth extends Admin
+class Auth extends Controller
 {
+    public function index()
+    {
+
+        return view('auth/home',self::$data);
+    }
+
+    public function login()
+    {
+        if (self::$REQUEST->method() == 'POST') {
+            $account = self::$REQUEST->input('account');
+            $password = self::$REQUEST->input('password');
+
+            $user = User::getInfoWhere(['account' => $account]);
+            if ($user) {
+                $pass = Func::packPassword($password, $user['token']);
+                if ($user['password'] != $pass) {
+                    UserActive::restore($user);
+
+                    return Redirect::to('/login');
+                }
+            }
+        }
+
+        return view('auth/login');
+    }
+
     public function menu()
     {
         $path = dirname(PROJECT_ROOT_PATH) . DIRECTORY_SEPARATOR . 'app/Http/Controllers/*';

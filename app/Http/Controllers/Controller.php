@@ -2,60 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Http\Common\ResponseCode;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Lib\Response;
 
 class Controller extends BaseController
 {
-    //use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public static $data = [
+        'slug'=>'',
+        'user_info'=>[],
+        'navigation'=>[]
+    ];
 
     /**
-     * 返回成功响应
-     *
-     * @param null $data
-     * @param array $headers
-     * @param int $options
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|Response
+     * @var Staticize
      */
-    public function success($data = null, $headers = [], $options = 0)
-    {
-        return $this->response('success', $data, $headers, $options);
-    }
-
+    public static $STATICIZE;
 
     /**
-     * 返回错误
-     *
-     * @param null $message
-     * @param array $headers
-     * @param int $options
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|Response
+     * @var Request
      */
-    public function error($message = null, $headers = [], $options = 0)
-    {
-        return $this->response('bad_request', $message, $headers, $options);
-    }
-
+    public static $REQUEST;
 
     /**
-     * 响应
-     *
-     * @param string $id
-     * @param null $data
-     * @param array $headers
-     * @param int $options
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Laravel\Lumen\Http\Redirector|Response
+     * @var
      */
+    public static $RESPONSE;
 
-    protected function response($id = 'success', $data = null, $headers = [], $options = 0)
+    public function __construct(Request $request)
     {
-        $request = app('request');
-        if ($request->ajax()) {
-            return new Response($id, $data, is_array($headers) ? $headers : [], $options);
-        }
-        return is_string($headers) ? redirect($headers) : redirect()->back();
+        self::$REQUEST = $request;
+        self::$RESPONSE = ResponseCode::getInstance();
     }
 }
