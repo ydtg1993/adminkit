@@ -21,7 +21,11 @@ class Auth extends Controller
 {
     public function index()
     {
-
+        $flag = UserActive::check($user_info);
+        if(!UserActive::check($flag)){
+            return Redirect::to('/login');
+        }
+        Controller::$data['user_info'] = $user_info;
         return view('auth/home',self::$data);
     }
 
@@ -35,10 +39,10 @@ class Auth extends Controller
             if ($user) {
                 $pass = Func::packPassword($password, $user['token']);
                 if ($user['password'] != $pass) {
-                    UserActive::restore($user);
-
-                    return Redirect::to('/login');
+                    return self::$RESPONSE->result(4001);
                 }
+                UserActive::restore($user);
+                return self::$RESPONSE->result(0);
             }
         }
 

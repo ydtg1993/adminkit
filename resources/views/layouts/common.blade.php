@@ -12,6 +12,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" href="{{URL::asset('favicon.ico')}}">
     <link rel="stylesheet" href="{{URL::asset('lib/uikit/css/uikit.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/app.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/common.css')}}">
 
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>

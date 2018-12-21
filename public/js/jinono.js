@@ -27,61 +27,50 @@
                                 return;
                             }
                             callback(d);
-                            alert(d.msg);
                             return;
                         }
                         callback(d);
-                        alert(d.msg);
                         return;
                     }
                 });
             }
         },
         login: {
-            sms_flag:false,
+            url:'',
+            redirect:'',
+            data:{},
             sub_flag:false,
-            init:function () {
-                $('#login input').change(this.change_event);
-                $('#login .get_sms').click(this.sms_event);
-                $('#login #submit').click(this.sub_event);
+            init:function (url,redirect) {
+                jinono.login.url = url;
+                jinono.login.redirect = redirect;
+                $('#login input').change(jinono.login.change_event);
+                $('#login #submit').click(jinono.login.submit_event);
             },
             change_event:function () {
-                $('#login .mobile_message').text('');
+                var name = $(this).prop('name');
+                var val = $(this).val();
+                jinono.login.data[name] = val;
+
                 if($(this).val()){
                     $(this).parent().addClass('input--filled');
                     return;
                 }
                 $(this).parent().removeClass('input--filled');
             },
-            sms_event:function () {
-                var mobile = $('input[name="mobile"]').val();
-                if(!mobile){
-                    $('#login .mobile_message').text('请输入手机号');
+            submit_event:function () {
+                if(jinono.login.sub_flag){
                     return;
                 }
-                if(!(/^1[34578]\d{9}$/.test(mobile))){
-                    $('#login .mobile_message').text('手机号错误');
-                    return;
-                }
-                var sms_ttl = parseInt(localStorage.getItem('sms_ttl'));
-                var now = jinono.time();
-                if(now < sms_ttl){
-                    $('#login .code_message').text('短信已发送');
-                    return;
-                }
-                localStorage.setItem('sms_ttl',now + 180);
+                jinono.login.sub_flag = true;
 
-                if(!jinono.login.sms_flag){
-                    jinono.login.sms_flag = true;
-                    var url = jinono.base_url+'/passport';
-
-                    jinono.requestEvent.apply(url,{mobile:mobile},'POST',false,function (d) {
-                        jinono.login.sms_flag = false;
-                    });
-                }
-            },
-            sub_event:function () {
-
+                jinono.requestEvent.apply(jinono.login.url,jinono.login.data,'POST',false,function (d) {
+                    jinono.login.sub_flag = false;
+                    if(d.code == 0){
+                        window.location.href = jinono.login.redirect;
+                        return;
+                    }
+                    $('#login .password_message').text('密码错误');
+                });
             }
         }
     };

@@ -11,44 +11,77 @@
     <link rel="stylesheet" href="{{URL::asset('css/app.css')}}">
 
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>
-    <script src="{{URL::asset('lib/uikit/js/uikit.min.js')}}"></script>
-    <script src="{{URL::asset('lib/uikit/js/uikit-icons.min.js')}}"></script>
     <script src="{{URL::asset('js/jinono.js')}}"></script>
+    <style>
+        #canvas {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #1a1724;
+        }
+
+        .canvas-wrap {
+            position: relative;
+
+        }
+
+        div.canvas-content {
+            position: relative;
+            z-index: 2000;
+            color: #fff;
+            text-align: center;
+            padding-top: 30px;
+        }
+    </style>
 </head>
 
 <body>
-<div id="login" style="background-color: #fafafa;padding: 30px 0;margin-top: 150px">
-    <img src="{{URL::asset('img/jinono.png')}}" style="width: 100px;margin: 15px 0">
-    <span class="input input--hoshi">
-			<input class="input__field input__field--hoshi" type="text" name="mobile" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="13">
+<div style="position: absolute;width: 100%">
+    <div id="login">
+        <img src="{{URL::asset('img/jinono.png')}}" style="width: 100px;margin: 15px 0">
+        <span class="input input--hoshi">
+			<input class="input__field input__field--hoshi" type="text" name="account" maxlength="16">
 					<label class="input__label input__label--hoshi input__label--hoshi-color-1">
-						<span class="input__label-content input__label-content--hoshi">手机号</span>
+						<span class="input__label-content input__label-content--hoshi">账户</span>
 					</label>
 		    </span>
-    <div class="mobile_message"></div>
+        <div class="account_message"></div>
 
-    <span class="input input--hoshi">
-			<input class="input__field input__field--hoshi" type="text" name="code" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="6">
+        <span class="input input--hoshi">
+			<input class="input__field input__field--hoshi" type="text" name="password" maxlength="16">
 					<label class="input__label input__label--hoshi input__label--hoshi-color-1">
-						<span class="input__label-content input__label-content--hoshi">验证码</span>
+						<span class="input__label-content input__label-content--hoshi">密码</span>
 					</label>
 		    </span>
-    <div class="code_message"></div>
-    <a href="javascript:void(0);" class="get_sms">获取短信验证</a>
+        <div class="password_message"></div>
 
-    <button id="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">登 陆</button>
-    <ul class="other_login_nav">
-        <li class="other_login"><a href="javascript:void(0);"><img class="logo" src="{{URL::asset('img/github.png')}}"></a></li>
-        <li class="other_login"><a href="javascript:void(0);"><img class="logo" src="{{URL::asset('img/qq.png')}}"></a></li>
-        <li class="other_login"><a href="javascript:void(0);"><img class="logo" src="{{URL::asset('img/weibo.png')}}"></a></li>
-        <li class="other_login"><a href="javascript:void(0);"><img class="logo" src="{{URL::asset('img/google.png')}}"></a></li>
-        <li class="clear_both"></li>
-    </ul>
+        <button id="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">登 陆</button>
+    </div>
 </div>
+
+
+<section class="canvas-wrap">
+    <div class="canvas-content">
+
+    </div>
+    <div id="canvas" class="gradient"></div>
+</section>
+
 </body>
 <script>
     $(function () {
-        jinono.login.init();
+        var url = '{{url('/login')}}';
+        var redirect = '{{url('/')}}';
+        jinono.login.init(url,redirect);
     });
 </script>
+<!--canvas -->
+<script src="{{URL::asset('lib/canvas/three.min.js')}}"></script>
+<script src="{{URL::asset('lib/canvas/projector.js')}}"></script>
+<script src="{{URL::asset('lib/canvas/canvas-renderer.js')}}"></script>
+<script src="{{URL::asset('lib/canvas/3d-lines-animation.js')}}"></script>
+<script src="{{URL::asset('lib/canvas/color.js')}}"></script>
 </html>

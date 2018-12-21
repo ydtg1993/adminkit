@@ -12,10 +12,9 @@
 */
 
 $router->match(['get','post'],'/login', 'Auth@login');
+$router->get('/', 'Auth@index');
 
 $router->group(['middleware' => 'CheckAdminLogin'], function () use ($router) {
-    $router->get('/', 'Auth@index');
-
     $router->get('/Auth.menu', 'Auth@menu');
     $router->post('/Auth.upMenu', 'Auth@upMenu');
 
