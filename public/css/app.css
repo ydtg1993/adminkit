@@ -8,19 +8,6 @@
     margin: 22em auto;
 }
 
-#login .get_sms{
-    display: block;
-    float: right;
-    position: relative;
-    top: -50px;
-    right: 25px;
-    z-index: 10000;
-}
-
-#login .get_sms:hover{
-    color: #104c89!important;
-}
-
 #login .account_message,#login .password_message{
     color: #a100a4;
     height: 15px;
