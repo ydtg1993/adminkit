@@ -170,7 +170,8 @@ class Func
 
     static function createToken()
     {
-        return md5(LARAVEL_START.mt_rand(1,50));
+        $str = uniqid(mt_rand(),1).microtime();
+        return sha1($str);
     }
 
     /**
