@@ -3,44 +3,41 @@
 @section('title', 'jinono')
 
 @section('content')
-
     <h3>{{$role['name']}}</h3>
     @foreach($permissions as $controller =>$permission)
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">{{$controller}}</h3>
-            </div>
-            <div class="box-body no-padding">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <td>
-                            @foreach($permission as $p)
-                            <div class="btn btn-default btn-flat">
-                                <input type="checkbox" data-permission-id="{{$p['id']}}" class="checkbox-inline" @if($p['isset'])checked="checked"@endif>
-                                {{$p['slug']}}
+        <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                <h3 class="uk-card-title">{{$controller}}</h3>
+                <p>
+                    <div class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
+                        @foreach($permission as $p)
+                            <div>
+                                <div class="uk-card uk-card-primary uk-card-body" style="padding: 10px 40px;">
+                                    <h3 class="uk-card-title">{{$p['action'] ? $p['action'] : '全选'}}</h3>
+                                    <p>
+                                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                            <label>
+                                                <input class="uk-radio" type="radio" name="{{$controller.'@'.$p['action']}}" @if($p['isset'] == 1)checked="checked"@endif>
+                                                <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 开</font></font>
+                                            </label>
+                                            <label>
+                                                <input class="uk-radio" type="radio" name="{{$controller.'@'.$p['action']}}" @if($p['isset'] == 0)checked="checked"@endif>
+                                                <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 关</font></font>
+                                            </label>
+                                        </div>
+                                    </p>
+                                </div>
                             </div>
-                            @endforeach
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        @endforeach
+                    </div>
+                </p>
             </div>
         </div>
     @endforeach
 
+
+
     <script>
-        $('input').click(function () {
-            var is_check = $(this).prop("checked");
-            var command = 'del';
-            if(is_check){
-                command = 'add';
-            }
-            var url = '{{url(ADMIN_URI.'/Auth.permission')}}';
-            var role_id = '{{$role['id']}}';
-            var permission_id = $(this).attr('data-permission-id');
-            var data = {role_id:role_id,permission_id:permission_id,command:command,'_token': '{{csrf_token()}}'};
-            requestEvent.apply(url,data);
-        });
+
     </script>
 @stop

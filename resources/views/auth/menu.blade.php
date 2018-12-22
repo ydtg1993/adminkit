@@ -15,7 +15,7 @@
                     <th>p_id</th>
                     <th>控制器</th>
                     <th>方法</th>
-                    <th>菜单字</th>
+                    <th>菜单名</th>
                     <th>可见</th>
                     <th>排序</th>
                     <th>描述</th>
@@ -28,9 +28,9 @@
                         <td>{{$d['p_id']}}</td>
                         <td>{{$d['controller']}}</td>
                         <td>{{$d['action']}}</td>
-                        <td>{{$d['name']}}</td>
-                        <td width="100px"><input name="view" class="input" value="{{$d['view']}}" /></td>
-                        <td width="100px"><input name="sort" class="input" value="{{$d['sort']}}"></td>
+                        <td width="120px"><input name="name" class="input" value="{{$d['name']}}" /></td>
+                        <td width="120px"><input name="view" class="input" value="{{$d['view']}}" /></td>
+                        <td width="120px"><input name="sort" class="input" value="{{$d['sort']}}"></td>
                         <td>{{$d['description']}}</td>
                     </tr>
                 @endforeach
