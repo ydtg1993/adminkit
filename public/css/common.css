@@ -98,7 +98,7 @@ p{
 }
 
 /*输入框*/
-.input {
+.form_input {
     display: block;
     width: 100%;
     font-size: 14px;
@@ -112,6 +112,15 @@ p{
     /* -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s; */
     -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.input {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    max-width: 350px;
+    width: calc(100% - 2em);
+    vertical-align: top;
 }
 
 .input__field {
