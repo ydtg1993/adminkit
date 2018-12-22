@@ -6,7 +6,7 @@
     <h3>{{$role['name']}}</h3>
     @foreach($permissions as $controller =>$permission)
         <div>
-            <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="padding: 10px 40px">
                 <h3 class="uk-card-title">{{$controller}}</h3>
                 <p>
                     <div class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>

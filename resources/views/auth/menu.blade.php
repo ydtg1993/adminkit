@@ -5,7 +5,7 @@
 @section('content')
     @foreach($list as $class_name=>$data)
         <div>
-        <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+        <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="padding: 0 40px">
             <h3 class="uk-card-title">{{$class_name}}</h3>
             <p>
             <table class="uk-table uk-table-striped">
@@ -28,9 +28,21 @@
                         <td>{{$d['p_id']}}</td>
                         <td>{{$d['controller']}}</td>
                         <td>{{$d['action']}}</td>
-                        <td width="120px"><input name="name" class="form_input" value="{{$d['name']}}" /></td>
-                        <td width="120px"><input name="view" class="form_input" value="{{$d['view']}}" /></td>
-                        <td width="120px"><input name="sort" class="form_input" value="{{$d['sort']}}"></td>
+                        <td style="width: 120px">
+                            <div class="uk-margin">
+                                <input name="name" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['name']}}" />
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <div class="uk-margin">
+                                <input name="view" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['view']}}" />
+                            </div>
+                        </td>
+                        <td style="width: 120px">
+                            <div class="uk-margin">
+                                <input name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
+                            </div>
+                        </td>
                         <td>{{$d['description']}}</td>
                     </tr>
                 @endforeach
