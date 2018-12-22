@@ -16,9 +16,14 @@
     <link rel="stylesheet" href="{{URL::asset('css/common.css')}}">
 
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>
+    <script src="{{URL::asset('js/jinono.js')}}"></script>
     <script src="{{URL::asset('lib/uikit/js/uikit.min.js')}}"></script>
     <script src="{{URL::asset('lib/uikit/js/uikit-icons.js')}}"></script>
-    <script src="{{URL::asset('js/jinono.js')}}"></script>
+    <script>
+        $(function () {
+            jinono.navigation.init();
+        })
+    </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -45,8 +50,12 @@
         </nav>
     </div>
 </div>
-<div class="tm-sidebar-left uk-visible@m"><h3><font style="vertical-align: inherit;"><font
-                    style="vertical-align: inherit;">菜单</font></font></h3>
+
+<div id="navigation" class="left_nav uk-visible@m" style="background-color: white;display: none">
+    <h3>
+        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">菜单</font></font>
+        <a id="navigation_close" href="javascript:void(0);" style="float: right"><span uk-icon="icon: arrow-left; ratio: 1.3"></span></a>
+    </h3>
     <ul uk-accordion="multiple: true">
         @foreach($navigation as $p_nav)
         <li class="uk-open">
@@ -62,6 +71,13 @@
         @endforeach
     </ul>
 </div>
+
+<div class="nav_open">
+    <a id="navigation_open" href="javascript:void(0);" style="color: white;position: relative;top:20px">
+        <span uk-icon="icon: list; ratio: 2" style=""></span>
+    </a>
+</div>
+
 <div class="uk-container uk-position-relative">
 @yield('content')
 </div>

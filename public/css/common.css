@@ -1,6 +1,6 @@
 html, body {
     font-family:  Helvetica, Arial, sans-serif;
-    background-color: #fff;
+    background-color: #f7f7f7;
     color: #636b6f;
     font-size: 12px;
     height: 100%;
@@ -282,46 +282,6 @@ p{
     cursor: pointer;
 }
 
-/*分页条*/
-.page_bar{
-    line-height: 1;
-    background: #ffffff;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0px 1px 1px rgba(0,0,0,0.05);
-}
-
-.page_list{
-    padding: 4px 10px 0px 5px;
-    margin: 0;
-    border-radius: 30px;
-    display: inline-block;
-    line-height: 26px;
-    font-size: 11px;
-    -webkit-font-smoothing: antialiased;
-}
-
-.page_list>li{
-    float: left;
-}
-
-.page_button{
-    padding: 0 10px;
-    border-radius: 2px;
-    font-weight: bold;
-    text-align: center;
-    color: #414141;
-    vertical-align: middle;
-    text-decoration: none;
-    line-height: 26px;
-    font-size: 11px;
-    -webkit-font-smoothing: antialiased;
-}
-
-.page_button:hover{
-    background-color: #f0f0f0;
-    cursor: pointer;
-}
-
 /*标注*/
 .tip{
     padding: 5px 10px;
@@ -415,18 +375,6 @@ p{
 .ips_tag_bar{
     float: left;
     margin: 5px 0 5px 5px;
-}
-
-.tm-sidebar-left {
-    z-index: 1000;
-    position: fixed;
-    top: 80px;
-    bottom: 0;
-    box-sizing: border-box;
-    width: 200px !important;
-    padding: 10px 15px;
-    border-right: 1px #e5e5e5 solid;
-    overflow: auto;
 }
 
 

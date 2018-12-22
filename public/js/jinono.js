@@ -4,13 +4,12 @@
 
     var jinono = {
         base_url:'http://'+window.location.host,
-        time:function () {
+        now_time:function () {
             return (Date.parse(new Date()) / 1000);
         },
         requestEvent: {
-            apply: function (url,data,method,refresh,callback) {
+            apply: function (url,data,method,callback) {
                 method = typeof method !== 'undefined' ?  method : 'POST';
-                refresh = typeof refresh !== 'undefined' ?  refresh : true;
                 callback = typeof callback == 'function' ?  callback : function (d) {};
                 data._token = $('meta[name="csrf-token"]').attr('content');
 
@@ -20,17 +19,7 @@
                     url: url,
                     data: data,
                     success: function (d) {
-                        if (d.code == 0) {
-                            if(refresh) {
-                                callback(d);
-                                window.location.reload();
-                                return;
-                            }
-                            callback(d);
-                            return;
-                        }
                         callback(d);
-                        return;
                     }
                 });
             }
@@ -63,13 +52,48 @@
                 }
                 jinono.login.sub_flag = true;
 
-                jinono.requestEvent.apply(jinono.login.url,jinono.login.data,'POST',false,function (d) {
+                jinono.requestEvent.apply(jinono.login.url,jinono.login.data,'POST',function (d) {
                     jinono.login.sub_flag = false;
                     if(d.code == 0){
                         window.location.href = jinono.login.redirect;
                         return;
                     }
                     $('#login .password_message').text('密码错误');
+                });
+            }
+        },
+        navigation:{
+            dom:null,
+            init:function () {
+                jinono.navigation.dom = $('#navigation');
+                var navigation = localStorage.getItem("navigation");
+                if(navigation == 1){
+                    jinono.navigation.open();
+                }else {
+                    jinono.navigation.dom.css('display','none');
+                }
+                $('#navigation_close').click(jinono.navigation.close);
+                $('#navigation_open').click(jinono.navigation.open);
+            },
+            close:function () {
+                jinono.navigation.dom.addClass('uk-animation-slide-left-medium uk-animation-reverse');
+                localStorage.setItem("navigation",0);
+                jinono.navigation.end();
+            },
+            open:function () {
+                jinono.navigation.dom.css('display','block');
+                jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
+                localStorage.setItem("navigation",1);
+                jinono.navigation.end();
+            },
+            end:function () {
+                document.querySelector('#navigation').addEventListener("webkitAnimationEnd", function() {
+                    var navigation = localStorage.getItem("navigation");
+                    if(navigation == 1){
+                        jinono.navigation.dom.removeClass('uk-animation-slide-left-medium');
+                    }else {
+                        jinono.navigation.dom.css('display','none');
+                    }
                 });
             }
         }
