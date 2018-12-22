@@ -10,7 +10,7 @@
 define('LARAVEL_START', microtime(true));
 define('TIME',time());
 define('NOW_DATE',date('Y-m-d H:i:s',TIME));
-define('PROJECT_ROOT_PATH',__DIR__);
+define('PROJECT_ROOT_PATH',dirname(__DIR__));
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

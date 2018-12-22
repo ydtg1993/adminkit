@@ -13,10 +13,11 @@ class Permissions extends BaseModel
 {
     protected $table = 'permissions';
 
-    public static function getAllInIds(array $where = [],array $ids = [])
+    public static function getAllInIds(array $where = [],array $ids = [],$order_by = 'id',$sort = 'ASC')
     {
         return self::where($where)
             ->whereIn('id',$ids)
-            ->get();
+            ->orderBy($order_by, $sort)
+            ->get()->toArray();
     }
 }

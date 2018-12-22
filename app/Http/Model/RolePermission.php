@@ -13,5 +13,4 @@ class RolePermission extends BaseModel
 {
     protected $table = 'role_permission';
 
-
 }

@@ -56,6 +56,30 @@ class Func
     }
 
     /**
+     * 多条件查询二维数组 返回唯一值
+     *
+     * @param $array
+     * @param array $params
+     * @return array
+     */
+    public static function getQuery2Array($array, array $params)
+    {
+        foreach ($array as $item) {
+            $flag = true;
+            foreach ($params as $field => $value) {
+                if ($item[$field] != $value) {
+                    $flag = false;
+                }
+            }
+            if ($flag) {
+                return $item;
+            }
+        }
+
+        return [];
+    }
+
+    /**
      * 多条件查询二维数组
      *
      * @param $array

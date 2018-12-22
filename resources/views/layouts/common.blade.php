@@ -48,13 +48,13 @@
 <div class="tm-sidebar-left uk-visible@m"><h3><font style="vertical-align: inherit;"><font
                     style="vertical-align: inherit;">菜单</font></font></h3>
     <ul uk-accordion="multiple: true">
-        @foreach($navigation as $navs)
+        @foreach($navigation as $p_nav)
         <li class="uk-open">
-            <a class="uk-accordion-title" href="#">{{current($navs)['c_name']}}</a>
+            <a class="uk-accordion-title" href="#">{{$p_nav['name']}}</a>
             <div class="uk-accordion-content">
                 <ul class="uk-list">
-                    @foreach($navs as $nav)
-                        <li><a href="{{url('/'.$nav['slug'])}}">{{$nav['m_name']}}</a></li>
+                    @foreach($p_nav['navs'] as $nav)
+                        <li><a href="{{url($nav['link'])}}">{{$nav['name']}}</a></li>
                     @endforeach
                 </ul>
             </div>

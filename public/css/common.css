@@ -409,8 +409,8 @@ p{
     top: 80px;
     bottom: 0;
     box-sizing: border-box;
-    width: 240px !important;
-    padding: 40px 40px 60px 40px;
+    width: 200px !important;
+    padding: 10px 15px;
     border-right: 1px #e5e5e5 solid;
     overflow: auto;
 }

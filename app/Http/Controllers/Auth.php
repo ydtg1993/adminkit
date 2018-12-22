@@ -19,16 +19,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class Auth extends Controller
 {
-    public function index()
-    {
-        $flag = UserActive::check($user_info);
-        if(!UserActive::check($flag)){
-            return Redirect::to('/login');
-        }
-        Controller::$data['user_info'] = $user_info;
-        return view('auth/home',self::$data);
-    }
-
     public function login()
     {
         if (self::$REQUEST->method() == 'POST') {
@@ -51,7 +41,7 @@ class Auth extends Controller
 
     public function menu()
     {
-        $path = dirname(PROJECT_ROOT_PATH) . DIRECTORY_SEPARATOR . 'app/Http/Controllers/*';
+        $path = PROJECT_ROOT_PATH . DIRECTORY_SEPARATOR . str_replace("\\","/",__NAMESPACE__).'/*';
         $controllers = glob($path);
 
         $list = [];
