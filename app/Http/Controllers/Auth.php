@@ -78,53 +78,59 @@ class Auth extends Controller
                     continue;
                 }
 
-                $c_n_name = $class_name . '.' . $method_name;
-                $permission_info_index = Func::multiQuery2ArrayIndex($permission_infos,['slug'=>$c_n_name]);
+                $permission_info_index = Func::multiQuery2ArrayIndex($permission_infos,['controller'=>$class_name,'action'=>$method_name]);
                 if (is_int($permission_info_index)) {
                     $permission_info = $permission_infos[$permission_info_index];
                     $permission_infos[$permission_info_index]['exists'] = true;
-                    $data = [
-                        'id' => $permission_info['id'],
-                        'c_name' => $permission_info['c_name'],
-                        'm_name' => $permission_info['m_name'],
-                        'slug' => $permission_info['slug'],
-                        'description' => $permission_info['description'],
-                        'access' => $permission_info['access'],
-                        'view' => $permission_info['view']
-                    ];
+                    $data = $permission_info;
                 } else {
-                    $id = Permissions::add([
-                        'controller'=>$class_name,
-                        'c_name' => '',
-                        'm_name' => '',
-                        'slug' => $c_n_name,
-                        'description' => '',
-                        'access' => 0,
-                        'view' => 0
-                    ]);
-                    $data = [
-                        'id' => $id,
-                        'c_name' => '',
-                        'm_name' => '',
-                        'slug' => $c_n_name,
-                        'description' => '',
-                        'access' => 0,
-                        'view' => 0
-                    ];
+                    //自动添加
+                    $data = $this->addMenu($class_name,$method_name);
                 }
 
                 $list[$class_name][] = $data;
             }
         }
-
+        //自动清除
         foreach ($permission_infos as $permission_info){
-            if (!isset($permission_info['exists'])){
+            if (!isset($permission_info['exists']) && $permission_info['p_id']){
                 Permissions::delInfoWhere(['id'=>$permission_info['id']]);
             }
         }
 
         self::$data['list'] = $list;
         return view('auth/menu', self::$data);
+    }
+
+    private function addMenu($class_name,$method_name)
+    {
+        $data = [
+            'controller'=>$class_name,
+            'action'=>$method_name,
+            'name'=>'',
+            'access'=>0,
+            'view'=>0,
+            'sort'=>0
+        ];
+        $p_nav = Permissions::getInfoWhere(['controller'=>$class_name,'p_id'=>0]);
+        if($p_nav){
+            $p_id = $p_nav['id'];
+        }else {
+            $p_id = Permissions::add([
+                'p_id' => 0,
+                'controller' => $class_name,
+                'action' => '',
+                'name' => $class_name,
+                'access' => 0,
+                'view' => 0,
+                'sort' => 0
+            ]);
+        }
+
+        $data['p_id'] = $p_id;
+        $id = Permissions::add($data);
+        $data['id'] = $id;
+        return $data;
     }
 
     public function upMenu()

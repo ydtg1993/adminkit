@@ -62,6 +62,8 @@
         @endforeach
     </ul>
 </div>
-
+<div class="uk-container uk-position-relative">
+@yield('content')
+</div>
 </body>
 </html>

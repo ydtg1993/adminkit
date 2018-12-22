@@ -37,8 +37,8 @@ class Menu
         }
 
         $permissions = Permissions::getAllInIds(['view' => 1, 'access' => 0], $auth_permission_ids, 'sort');
-        $p_nav = [];
 
+        $p_navs = [];
         foreach ($permissions as $k=>$permission) {
             if ($permission['p_id'] == 0) {
                 $nav_info = [
@@ -46,13 +46,13 @@ class Menu
                     'name'=>$permission['name'],
                     'navs'=>[]
                 ];
-                $p_nav[] = $nav_info;
+                $p_navs[] = $nav_info;
                 unset($permissions[$k]);
             }
         }
 
-        foreach ($p_nav as &$navigation){
-            $p_id = $navigation['id'];
+        foreach ($p_navs as &$p_nav){
+            $p_id = $p_nav['id'];
             foreach ($permissions as &$permission){
                 if($permission['p_id'] != $p_id){
                     continue;
@@ -64,10 +64,10 @@ class Menu
                     continue;
                 }
                 $permission['link'] = $route['uri'];
-                $navigation['navs'][] = $permission;
+                $p_nav['navs'][] = $permission;
             }
         }
 
-        return $p_nav;
+        return $p_navs;
     }
 }

@@ -3,63 +3,45 @@
 @section('title', 'jinono')
 
 @section('content')
-
-
-            @foreach($list as $class_name=>$data)
-                <div class="box" data-id="{{current($data)['id']}}">
-                    <div class="box-header">
-                        <h3 class="box-title">{{$class_name}}</h3>
-                        <input type="text" name="c_name" class="form-control" value="{{current($data)['c_name']}}">
-                        <div class="box-tools">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-
-                        <table class="table table-striped">
-                            <tbody>
-                            <tr>
-                                <th>方法别名</th>
-                                <th>控制器.方法</th>
-                                <th>描述</th>
-                                <th>可见</th>
-                            </tr>
-                            @foreach($data as $d)
-                                <tr data-id="{{$d['id']}}">
-                                    <td><input type="text" name="m_name" class="form-control" value="{{$d['m_name']}}"></td>
-                                    <td>{{$d['slug']}}</td>
-                                    <td><input type="text" name="description" class="form-control"
-                                               value="{{$d['description']}}"></td>
-                                    <td><input type="text" name="view" class="form-control" value="{{$d['view']}}"></td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            @endforeach
+    @foreach($list as $class_name=>$data)
+        <div>
+        <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+            <h3 class="uk-card-title">{{$class_name}}</h3>
+            <p>
+            <table class="uk-table uk-table-striped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>p_id</th>
+                    <th>控制器</th>
+                    <th>方法</th>
+                    <th>菜单字</th>
+                    <th>可见</th>
+                    <th>排序</th>
+                    <th>描述</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($data as $d)
+                    <tr>
+                        <td>{{$d['id']}}</td>
+                        <td>{{$d['p_id']}}</td>
+                        <td>{{$d['controller']}}</td>
+                        <td>{{$d['action']}}</td>
+                        <td>{{$d['name']}}</td>
+                        <td width="100px"><input name="view" class="input" value="{{$d['view']}}" /></td>
+                        <td width="100px"><input name="sort" class="input" value="{{$d['sort']}}"></td>
+                        <td>{{$d['description']}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+            </p>
+        </div>
+        </div>
+    @endforeach
 
     <script>
-        $('.form-control').blur(function () {
-            var id = $(this).parent().parent().attr('data-id');
-            var c_name = $(this).parent().find('input[name="c_name"]').val();
-            var m_name = $(this).parent().find('input[name="m_name"]').val();
-            var description = $(this).parent().find('input[name="description"]').val();
-            var view = $(this).parent().find('input[name="view"]').val();
 
-            var url = '{{url('/Auth.upMenu')}}';
-            var data = {
-                '_token': '{{csrf_token()}}',
-                'id': id,
-                'c_name': c_name,
-                'm_name': m_name,
-                'description': description,
-                'view': view,
-            };
-            requestEvent.apply(url,data);
-        });
     </script>
 @stop
