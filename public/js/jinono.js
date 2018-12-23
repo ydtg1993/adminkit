@@ -68,15 +68,23 @@
             init:function () {
                 jinono.navigation.dom = $('#navigation');
                 jinono.navigation.but = $('#navigation_open');
-                var navigation = localStorage.getItem("navigation");
-                if(navigation == 1){
-                    jinono.navigation.open();
-                }else {
-                    jinono.navigation.dom.css('display','none');
-                }
+
+                jinono.navigation.memory();
+
                 $('#container').click(jinono.navigation.close);
                 $('#navigation_close').click(jinono.navigation.close);
                 $('#navigation_open').click(jinono.navigation.open);
+            },
+            memory:function () {
+                var navigation = localStorage.getItem("navigation");
+                if(navigation == 1){
+                    jinono.navigation.dom.css('display','block');
+                    jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
+                    localStorage.setItem("navigation",1);
+                    jinono.navigation.end();
+                }else {
+                    jinono.navigation.dom.css('display','none');
+                }
             },
             close:function () {
                 var navigation = localStorage.getItem("navigation");
