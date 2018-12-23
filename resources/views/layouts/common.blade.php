@@ -73,8 +73,8 @@
 </div>
 
 <div class="nav_open">
-    <a id="navigation_open" href="javascript:void(0);" style="color: white;position: relative;top:20px">
-        <span uk-icon="icon: list; ratio: 2" style=""></span>
+    <a id="navigation_open" href="javascript:void(0);" style="color: white;position: relative;top:22px">
+        <span uk-icon="icon: list; ratio: 1.8" style=""></span>
     </a>
 </div>
 
