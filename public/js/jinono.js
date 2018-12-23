@@ -74,15 +74,24 @@
                 }else {
                     jinono.navigation.dom.css('display','none');
                 }
+                $('#container').click(jinono.navigation.close);
                 $('#navigation_close').click(jinono.navigation.close);
                 $('#navigation_open').click(jinono.navigation.open);
             },
             close:function () {
+                var navigation = localStorage.getItem("navigation");
+                if(navigation == 0){
+                    return;
+                }
                 jinono.navigation.dom.addClass('uk-animation-slide-left-medium uk-animation-reverse');
                 localStorage.setItem("navigation",0);
                 jinono.navigation.end();
             },
             open:function () {
+                var navigation = localStorage.getItem("navigation");
+                if(navigation == 1){
+                    return;
+                }
                 jinono.navigation.dom.css('display','block');
                 jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
                 localStorage.setItem("navigation",1);

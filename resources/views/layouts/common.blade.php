@@ -76,7 +76,7 @@
     </a>
 </div>
 
-<div class="uk-container uk-position-relative">
+<div class="uk-container uk-position-relative" id="container">
     <h2 class="uk-heading-line" style="margin: 10px auto"><span>{{$head}}</span></h2>
 @yield('content')
 </div>

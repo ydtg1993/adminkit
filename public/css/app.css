@@ -34,7 +34,7 @@
     top: 0px;
     width: 100%;
     background: linear-gradient(to left, #28a5f5, #1e87f0);
-    box-shadow: 2px 2px 10px #888888;
+    box-shadow: 5px 4px 15px #888888;
 }
 
 /*边栏导航*/
@@ -48,6 +48,7 @@
     padding: 10px 15px;
     border-right: 1px #e5e5e5 solid;
     overflow: auto;
+    box-shadow: 2px 2px 10px #888888;
 }
 
 .nav_open{
