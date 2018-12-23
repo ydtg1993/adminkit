@@ -12,7 +12,7 @@
                     <div class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
                         @foreach($permission as $p)
                             <div>
-                                <div class="uk-card uk-card-primary uk-card-body" style="padding: 10px 40px;">
+                                <div class="uk-card uk-card-primary uk-card-body uk-card-hover" style="padding: 10px 40px;">
                                     <h3 class="uk-card-title">{{$p['action'] ? $p['action'] : '全选'}}</h3>
                                     <p>
                                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">

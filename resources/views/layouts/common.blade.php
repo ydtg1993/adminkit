@@ -27,8 +27,7 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-<div uk-sticky="media: 960" class="uk-navbar-container tm-navbar-container uk-sticky uk-sticky-fixed"
-     style="position: fixed; top: 0px; width: 100%;background: linear-gradient(to left, #28a5f5, #1e87f0);">
+<div id="top_nav" uk-sticky="media: 960" class="uk-navbar-container tm-navbar-container uk-sticky uk-sticky-fixed">
     <div class="uk-container uk-container-expand">
         <nav class="uk-navbar">
             <div class="uk-navbar-left">
@@ -51,7 +50,7 @@
     </div>
 </div>
 
-<div id="navigation" class="left_nav uk-visible@m" style="background-color: white;display: none">
+<div id="navigation" class="left_nav uk-visible@m" style="background-color: #ffffffd1;display: none">
     <h3>
         <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">菜单</font></font>
         <a id="navigation_close" href="javascript:void(0);" style="float: right"><span uk-icon="icon: arrow-left; ratio: 1.3"></span></a>
@@ -71,14 +70,14 @@
         @endforeach
     </ul>
 </div>
-
-<div class="nav_open">
-    <a id="navigation_open" href="javascript:void(0);" style="color: white;position: relative;top:22px">
+<div class="nav_open" id="navigation_open">
+    <a href="javascript:void(0);" style="color: white;position: relative;top:22px">
         <span uk-icon="icon: list; ratio: 1.8" style=""></span>
     </a>
 </div>
 
 <div class="uk-container uk-position-relative">
+    <h2 class="uk-heading-line" style="margin: 10px auto"><span>{{$head}}</span></h2>
 @yield('content')
 </div>
 </body>

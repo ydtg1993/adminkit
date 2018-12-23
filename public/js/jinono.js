@@ -64,8 +64,10 @@
         },
         navigation:{
             dom:null,
+            but:null,
             init:function () {
                 jinono.navigation.dom = $('#navigation');
+                jinono.navigation.but = $('#navigation_open');
                 var navigation = localStorage.getItem("navigation");
                 if(navigation == 1){
                     jinono.navigation.open();
@@ -91,8 +93,11 @@
                     var navigation = localStorage.getItem("navigation");
                     if(navigation == 1){
                         jinono.navigation.dom.removeClass('uk-animation-slide-left-medium');
+                        jinono.navigation.but.css('display','none');
                     }else {
                         jinono.navigation.dom.css('display','none');
+                        jinono.navigation.but.css('display','block');
+                        jinono.navigation.but.addClass('uk-animation-fade');
                     }
                 });
             }

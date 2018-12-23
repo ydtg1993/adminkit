@@ -1,17 +1,17 @@
 /*
- Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
  Source Server         : 本地
  Source Server Type    : MySQL
- Source Server Version : 80012
+ Source Server Version : 50719
  Source Host           : localhost:3306
- Source Schema         : wanzhuan_admin
+ Source Schema         : admin
 
  Target Server Type    : MySQL
- Target Server Version : 80012
+ Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 21/12/2018 18:59:17
+ Date: 23/12/2018 11:33:33
 */
 
 SET NAMES utf8mb4;
@@ -23,26 +23,29 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `controller` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `c_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '控制器别名',
-  `m_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '方法别名',
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `p_id` int(10) NOT NULL DEFAULT 0 COMMENT '0一级菜单 >0子菜单',
+  `controller` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '控制器',
+  `action` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '方法',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '方法别名',
   `access` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0公有 1保护 2私有',
-  `view` tinyint(1) NOT NULL DEFAULT 0,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `view` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0不可见 1可见',
+  `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES (1, 'Admin', '主页', '主页', 'Auth.index', 0, 1, '');
-INSERT INTO `permissions` VALUES (2, 'Auth', '权限管理', '导航', 'Auth.menu', 0, 1, '');
-INSERT INTO `permissions` VALUES (3, 'Auth', '权限管理', 'Auth.upMenu', 'Auth.upMenu', 0, 0, '');
-INSERT INTO `permissions` VALUES (4, 'Auth', '权限管理', '角色', 'Auth.role', 0, 1, '');
-INSERT INTO `permissions` VALUES (5, 'Auth', '', '', 'Auth.roleBindUser', 0, 0, '');
-INSERT INTO `permissions` VALUES (6, 'Auth', '', '', 'Auth.permission', 0, 0, '');
-INSERT INTO `permissions` VALUES (7, 'Auth', '', '', 'Auth.login', 0, 0, '');
+INSERT INTO `permissions` VALUES (1, 0, 'Home', '', '首页', 0, 1, 0, '');
+INSERT INTO `permissions` VALUES (2, 1, 'Home', 'index', '首页', 0, 1, 0, '');
+INSERT INTO `permissions` VALUES (3, 0, 'Auth', '', '授权管理', 0, 1, 0, '');
+INSERT INTO `permissions` VALUES (4, 3, 'Auth', 'menu', '导航菜单', 0, 1, 0, '');
+INSERT INTO `permissions` VALUES (5, 3, 'Auth', 'upMenu', '', 1, 1, 0, '');
+INSERT INTO `permissions` VALUES (6, 3, 'Auth', 'role', '管理角色', 0, 1, 0, '');
+INSERT INTO `permissions` VALUES (7, 3, 'Auth', 'login', '', 0, 0, 0, '');
+INSERT INTO `permissions` VALUES (8, 3, 'Auth', 'roleBindUser', '角色绑定', 0, 0, 0, '');
+INSERT INTO `permissions` VALUES (9, 3, 'Auth', 'permission', '权限设置', 0, 0, 0, '');
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -53,19 +56,20 @@ CREATE TABLE `role_permission`  (
   `role_id` int(10) UNSIGNED NOT NULL,
   `permission_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
 INSERT INTO `role_permission` VALUES (1, 1, 1);
 INSERT INTO `role_permission` VALUES (2, 1, 2);
-INSERT INTO `role_permission` VALUES (5, 1, 3);
-INSERT INTO `role_permission` VALUES (6, 1, 4);
-INSERT INTO `role_permission` VALUES (7, 1, 5);
-INSERT INTO `role_permission` VALUES (8, 1, 6);
-INSERT INTO `role_permission` VALUES (9, 1, 7);
-INSERT INTO `role_permission` VALUES (10, 1, 8);
+INSERT INTO `role_permission` VALUES (3, 1, 3);
+INSERT INTO `role_permission` VALUES (4, 1, 4);
+INSERT INTO `role_permission` VALUES (5, 1, 5);
+INSERT INTO `role_permission` VALUES (6, 1, 6);
+INSERT INTO `role_permission` VALUES (7, 1, 7);
+INSERT INTO `role_permission` VALUES (8, 1, 8);
+INSERT INTO `role_permission` VALUES (9, 1, 9);
 
 -- ----------------------------
 -- Table structure for roles
@@ -76,7 +80,7 @@ CREATE TABLE `roles`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
@@ -92,7 +96,7 @@ CREATE TABLE `user_role`  (
   `user_id` int(10) UNSIGNED NOT NULL,
   `role_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
@@ -122,7 +126,7 @@ CREATE TABLE `users`  (
   `create_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from` tinyint(5) NOT NULL DEFAULT 0 COMMENT '渠道商',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10000 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10001 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users

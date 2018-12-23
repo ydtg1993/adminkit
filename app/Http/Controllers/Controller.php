@@ -11,6 +11,7 @@ class Controller extends BaseController
 {
     public static $data = [
         'slug'=>'',
+        'head'=>'',
         'user_info'=>[],
         'navigation'=>[]
     ];

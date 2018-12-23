@@ -63,6 +63,7 @@ class CheckAdmin
             die('需要超级管理员开通');
         }
 
+        Controller::$data['head'] = $permission['name'];
         //权限导航
         Controller::$data['navigation'] = Menu::getList($auth_permission_ids);
 
