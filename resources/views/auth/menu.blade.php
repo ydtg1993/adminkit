@@ -8,7 +8,7 @@
         <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="padding: 0 40px">
             <h3 class="uk-card-title">{{$class_name}}</h3>
             <p>
-            <table class="uk-table uk-table-striped">
+            <table class="uk-table uk-table-striped" id="auto-form">
                 <thead>
                 <tr>
                     <th>id</th>

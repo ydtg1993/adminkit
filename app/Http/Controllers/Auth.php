@@ -139,19 +139,14 @@ class Auth extends Controller
             $id = self::$REQUEST->input('id');
 
             $data = [];
-            if(self::$REQUEST->has('c_name')){
-                $data['c_name'] = self::$REQUEST->input('c_name');
-                $permission_info = Permissions::getInfoWhere(['id'=>$id]);
-                $permission_infos = Permissions::getAllWhere(['controller'=>$permission_info->controller]);
-                $ids = array_column($permission_infos,'id');
-                Permissions::upInfoInWhere($data,$ids,'id');
-                return self::$RESPONSE->result(0);
-            }
-            if(self::$REQUEST->has('m_name')){
-                $data['m_name'] = self::$REQUEST->input('m_name');
+            if(self::$REQUEST->has('name')){
+                $data['name'] = self::$REQUEST->input('name');
             }
             if(self::$REQUEST->has('description')){
                 $data['description'] = self::$REQUEST->input('description');
+            }
+            if(self::$REQUEST->has('sort')){
+                $data['sort'] = self::$REQUEST->input('sort');
             }
             if(self::$REQUEST->has('view')){
                 $data['view'] = (int)(boolean)self::$REQUEST->input('view');
@@ -203,13 +198,13 @@ class Auth extends Controller
     {
         if(self::$REQUEST->ajax()){
             $role_id = self::$REQUEST->input('role_id');
-            $permission_id = self::$REQUEST->input('permission_id');
-            $command = self::$REQUEST->input('command');
+            $permission_id = self::$REQUEST->input('id');
+            $select = self::$REQUEST->input('select');
 
             $result = false;
-            if($command == 'add'){
+            if($select == 1){
                 $result = RolePermission::add(['role_id'=>$role_id,'permission_id'=>$permission_id]);
-            }elseif ($command == 'del'){
+            }elseif ($select == 0){
                 $result = RolePermission::delInfoWhere(['role_id'=>$role_id,'permission_id'=>$permission_id]);
             }
 
@@ -239,5 +234,4 @@ class Auth extends Controller
         self::$data['permissions'] = $permissions;
         return view('auth/permission', self::$data);
     }
-
 }

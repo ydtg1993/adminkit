@@ -16,14 +16,16 @@ $router->match(['get','post'],'/login', 'Auth@login');
 $router->group(['middleware' => 'CheckAdminLogin'], function () use ($router) {
     $router->get('/', 'Home@index');
 
-    $router->get('/Auth.menu', 'Auth@menu');
-    $router->post('/Auth.upMenu', 'Auth@upMenu');
+    $router->get('Auth.menu', 'Auth@menu');
+    $router->post('Auth.upMenu', 'Auth@upMenu');
 
-    $router->get('/Auth.role', 'Auth@role');
+    $router->get('Auth.role', 'Auth@role');
 
-    $router->get('/Auth.roleBindUser/{role_id}', 'Auth@roleBindUser');
-    $router->post('/Auth.roleBindUser', 'Auth@roleBindUser');
+    $router->get('Auth.roleBindUser/{role_id}', 'Auth@roleBindUser');
+    $router->post('Auth.roleBindUser', 'Auth@roleBindUser');
 
-    $router->get('/Auth.permission/{role_id}', 'Auth@permission');
-    $router->post('/Auth.permission', 'Auth@permission');
+    $router->get('Auth.permission/{role_id}', 'Auth@permission');
+    $router->post('Auth.permission', 'Auth@permission');
+
+    $router->get('Auth.userList', 'Auth@userList');
 });

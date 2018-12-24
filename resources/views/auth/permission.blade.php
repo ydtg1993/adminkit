@@ -9,7 +9,7 @@
             <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="padding: 10px 40px">
                 <h3 class="uk-card-title">{{$controller}}</h3>
                 <p>
-                    <div class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
+                    <div id="auto_radio" class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
                         @foreach($permission as $p)
                             <div>
                                 <div class="uk-card uk-card-primary uk-card-body uk-card-hover" style="padding: 10px 40px;">
@@ -17,11 +17,11 @@
                                     <p>
                                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                             <label>
-                                                <input class="uk-radio" type="radio" name="{{$controller.'@'.$p['action']}}" @if($p['isset'] == 1)checked="checked"@endif>
+                                                <input class="uk-radio" data-id="{{$p['id']}}" type="radio" name="{{$controller.'@'.$p['action']}}" value="1" @if($p['isset'] == 1)checked="checked"@endif>
                                                 <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 开</font></font>
                                             </label>
                                             <label>
-                                                <input class="uk-radio" type="radio" name="{{$controller.'@'.$p['action']}}" @if($p['isset'] == 0)checked="checked"@endif>
+                                                <input class="uk-radio" data-id="{{$p['id']}}" type="radio" name="{{$controller.'@'.$p['action']}}" value="0" @if($p['isset'] == 0)checked="checked"@endif>
                                                 <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 关</font></font>
                                             </label>
                                         </div>
@@ -35,9 +35,10 @@
         </div>
     @endforeach
 
-
-
     <script>
-
+        $(function () {
+            var url = '{{url('Auth.permission')}}';
+           jinono.auto_radio.init(url,{role_id:'{{$role['id']}}'});
+        });
     </script>
 @stop

@@ -7,6 +7,9 @@
         now_time:function () {
             return (Date.parse(new Date()) / 1000);
         },
+        prompt:function () {
+
+        },
         requestEvent: {
             apply: function (url,data,method,callback) {
                 method = typeof method !== 'undefined' ?  method : 'POST';
@@ -62,23 +65,6 @@
                 });
             }
         },
-        auto_form:{
-          url:'',
-          flag:false,
-          init:function (url) {
-            jinono.auto_form.url = url;
-            $('#form input').blur(jinono.auto_form.apply);
-          },
-          apply:function () {
-              if(jinono.auto_form.flag){
-                  return;
-              }
-              jinono.auto_form.flag = false;
-              jinono.requestEvent.apply(jinono.auto_form.url,jinono.login.data,'POST',function (d) {
-                    
-              });
-          }
-        },
         navigation:{
             dom:null,
             but:null,
@@ -91,6 +77,7 @@
                 $('#container').click(jinono.navigation.close);
                 $('#navigation_close').click(jinono.navigation.close);
                 $('#navigation_open').click(jinono.navigation.open);
+                jinono.navigation.listener();
             },
             memory:function () {
                 var navigation = localStorage.getItem("navigation");
@@ -98,7 +85,6 @@
                     jinono.navigation.dom.css('display','block');
                     jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
                     localStorage.setItem("navigation",1);
-                    jinono.navigation.end();
                 }else {
                     jinono.navigation.dom.css('display','none');
                 }
@@ -110,7 +96,6 @@
                 }
                 jinono.navigation.dom.addClass('uk-animation-slide-left-medium uk-animation-reverse');
                 localStorage.setItem("navigation",0);
-                jinono.navigation.end();
             },
             open:function () {
                 var navigation = localStorage.getItem("navigation");
@@ -120,9 +105,8 @@
                 jinono.navigation.dom.css('display','block');
                 jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
                 localStorage.setItem("navigation",1);
-                jinono.navigation.end();
             },
-            end:function () {
+            listener:function () {
                 document.querySelector('#navigation').addEventListener("webkitAnimationEnd", function() {
                     var navigation = localStorage.getItem("navigation");
                     if(navigation == 1){
@@ -132,6 +116,70 @@
                         jinono.navigation.dom.css('display','none');
                         jinono.navigation.but.css('display','block');
                         jinono.navigation.but.addClass('uk-animation-fade');
+                    }
+                });
+            }
+        },
+        auto_form:{
+            url:'',
+            is_up:false,
+            flag:false,
+            init:function (url) {
+                jinono.auto_form.url = url;
+                var dom = $('#auto-form input');
+                dom.focus(function () {
+                    jinono.auto_form.is_up = false;
+                });
+                dom.change(function () {
+                    jinono.auto_form.is_up = true;
+                });
+                dom.blur(jinono.auto_form.apply);
+            },
+            apply:function () {
+                if(jinono.auto_form.flag){
+                    return;
+                }
+                if(jinono.auto_form.is_up == false){
+                    return;
+                }
+                var data = {
+                    'id':parseInt($(this).attr('data-id'))
+                };
+                var name = $(this).prop('name');
+                data[name] = $(this).val();
+
+                jinono.auto_form.flag = true;
+                jinono.requestEvent.apply(jinono.auto_form.url,data,'POST',function (d) {
+                    jinono.auto_form.flag = false;
+                    if(d.code == 0){
+                        return;
+                    }
+                });
+            }
+        },
+        auto_radio:{
+            url:'',
+            flag:false,
+            data:{},
+            init:function (url,data) {
+                jinono.auto_radio.url = url;
+                data = typeof data == 'object' ?  data : {};
+                jinono.auto_radio.data = data;
+                $('#auto_radio input').click(jinono.auto_radio.apply);
+            },
+            apply:function () {
+                if(jinono.auto_radio.flag){
+                    return;
+                }
+                jinono.auto_radio.flag = true;
+
+                jinono.auto_radio.data['id'] = parseInt($(this).attr('data-id'));
+                jinono.auto_radio.data['select'] = parseInt($(this).val());
+
+                jinono.requestEvent.apply(jinono.auto_radio.url,jinono.auto_radio.data,'POST',function (d) {
+                    jinono.auto_radio.flag = false;
+                    if(d.code == 0){
+                        return;
                     }
                 });
             }
