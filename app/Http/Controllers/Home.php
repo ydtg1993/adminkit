@@ -17,7 +17,7 @@ class Home extends Controller
     public function index()
     {
         $flag = UserActive::check($user_info);
-        if(!UserActive::check($flag)){
+        if(!$flag){
             return Redirect::to('/login');
         }
         Controller::$data['user_info'] = $user_info;

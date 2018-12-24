@@ -23,12 +23,8 @@ class UserActive
      */
     public static function restore($user_info)
     {
-        $active_token = Func::createToken();
-
-        Cookie::queue('active_token',$active_token,TIME + 86400);
-        $cache_key = RedisDriver::getInstance()->getCacheKey('active.user', $active_token);
         User::upInfoInWhere(['last_login_time'=>NOW_DATE]);
-        return (boolean)RedisDriver::getInstance()->redis->setex($cache_key, 3600, json_encode($user_info));
+        return session(['administrator'=>json_encode($user_info)]);
     }
 
     /**
@@ -38,25 +34,12 @@ class UserActive
      */
     public static function check(&$user_info)
     {
-        $active_token = Cookie::get('active_token');
-        if (!$active_token) {
-            return false;
-        }
-
-        $cache_key = RedisDriver::getInstance()->getCacheKey('active.user', $active_token);
-        $user_info = RedisDriver::getInstance()->redis->get($cache_key);
-
-        if ($user_info == null) {
-            return false;
-        }
-
-        $time = RedisDriver::getInstance()->redis->ttl($cache_key);
-        if ($time < 1000) {
-            RedisDriver::getInstance()->redis->setex($cache_key, 3600, $user_info);
-        }
-
+        $user_info = session()->get('administrator');
         $user_info = (array)json_decode($user_info);
-        return true;
+        if(!empty($user_info)){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -65,9 +48,6 @@ class UserActive
      */
     public static function destroy()
     {
-        $active_token = Cookie::get('active_token');
-        Cookie::forget('active_token');
-        $cache_key = RedisDriver::getInstance()->getCacheKey('active.user', $active_token);
-        return (boolean)RedisDriver::getInstance()->redis->del($cache_key);
+        session()->forget('administrator');
     }
 }
