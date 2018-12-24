@@ -162,6 +162,13 @@ class Auth extends Controller
         }
     }
 
+    public function userList()
+    {
+        $users = User::getAllWhere();
+        self::$data['users'] = $users;
+        return view('auth/users', self::$data);
+    }
+
     public function role()
     {
         $roles = Roles::getAllWhere();

@@ -16,10 +16,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($roles as $role)
+                @foreach($users as $user)
                     <tr>
-                        <td>{{$role['id']}}</td>
-                        <td>{{$role['name']}}</td>
+                        <td>{{$user['id']}}</td>
+                        <td>{{$user['name']}}</td>
                         <td>
                             <a href="{{url('Auth.roleBindUser/'.$role['id'])}}" type="button">绑定用户</a>
                             <a href="{{url('Auth.permission/'.$role['id'])}}" type="button">权限设置</a>

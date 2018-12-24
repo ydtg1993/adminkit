@@ -62,6 +62,23 @@
                 });
             }
         },
+        auto_form:{
+          url:'',
+          flag:false,
+          init:function (url) {
+            jinono.auto_form.url = url;
+            $('#form input').blur(jinono.auto_form.apply);
+          },
+          apply:function () {
+              if(jinono.auto_form.flag){
+                  return;
+              }
+              jinono.auto_form.flag = false;
+              jinono.requestEvent.apply(jinono.auto_form.url,jinono.login.data,'POST',function (d) {
+                    
+              });
+          }
+        },
         navigation:{
             dom:null,
             but:null,

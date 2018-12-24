@@ -30,17 +30,17 @@
                         <td>{{$d['action']}}</td>
                         <td style="width: 120px">
                             <div class="uk-margin">
-                                <input name="name" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['name']}}" />
+                                <input data-id="{{$d['id']}}" name="name" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['name']}}" />
                             </div>
                         </td>
                         <td style="width: 120px">
                             <div class="uk-margin">
-                                <input name="view" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['view']}}" />
+                                <input data-id="{{$d['id']}}" name="view" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['view']}}" />
                             </div>
                         </td>
                         <td style="width: 120px">
                             <div class="uk-margin">
-                                <input name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
+                                <input data-id="{{$d['id']}}" name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
                             </div>
                         </td>
                         <td>{{$d['description']}}</td>
@@ -54,6 +54,9 @@
     @endforeach
 
     <script>
-
+        $(function () {
+            var url = '{{url('Auth.upMenu')}}';
+           jinono.auto_form.init(url);
+        });
     </script>
 @stop
