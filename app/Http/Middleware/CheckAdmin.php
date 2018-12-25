@@ -9,8 +9,10 @@ use App\Http\Dao\UserActive;
 use App\Http\Model\Permissions;
 use App\Http\Model\RolePermission;
 use App\Http\Model\UserRole;
+use App\Libs\Helper\Func;
 use Closure;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Helper\Helper;
 
 class CheckAdmin
 {

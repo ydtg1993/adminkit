@@ -39,4 +39,9 @@
         </div>
     </div>
 
+    <script>
+        $(function () {
+
+        });
+    </script>
 @stop

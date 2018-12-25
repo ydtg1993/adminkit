@@ -8,7 +8,7 @@
         <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="padding: 0 40px">
             <h3 class="uk-card-title">{{$class_name}}</h3>
             <p>
-            <table class="uk-table uk-table-striped" id="auto-form">
+            <table class="uk-table uk-table-striped" id="auto_input_update">
                 <thead>
                 <tr>
                     <th>id</th>
@@ -56,7 +56,7 @@
     <script>
         $(function () {
             var url = '{{url('Auth.upMenu')}}';
-           jinono.auto_form.init(url);
+           jinono.auto_input_update.init(url);
         });
     </script>
 @stop

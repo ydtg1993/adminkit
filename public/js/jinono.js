@@ -120,26 +120,26 @@
                 });
             }
         },
-        auto_form:{
+        auto_input_update:{
             url:'',
             is_up:false,
             flag:false,
             init:function (url) {
-                jinono.auto_form.url = url;
-                var dom = $('#auto-form input');
+                jinono.auto_input_update.url = url;
+                var dom = $('#auto_input_update input');
                 dom.focus(function () {
-                    jinono.auto_form.is_up = false;
+                    jinono.auto_input_update.is_up = false;
                 });
                 dom.change(function () {
-                    jinono.auto_form.is_up = true;
+                    jinono.auto_input_update.is_up = true;
                 });
-                dom.blur(jinono.auto_form.apply);
+                dom.blur(jinono.auto_input_update.apply);
             },
             apply:function () {
-                if(jinono.auto_form.flag){
+                if(jinono.auto_input_update.flag){
                     return;
                 }
-                if(jinono.auto_form.is_up == false){
+                if(jinono.auto_input_update.is_up == false){
                     return;
                 }
                 var data = {
@@ -148,36 +148,36 @@
                 var name = $(this).prop('name');
                 data[name] = $(this).val();
 
-                jinono.auto_form.flag = true;
-                jinono.requestEvent.apply(jinono.auto_form.url,data,'POST',function (d) {
-                    jinono.auto_form.flag = false;
+                jinono.auto_input_update.flag = true;
+                jinono.requestEvent.apply(jinono.auto_input_update.url,data,'POST',function (d) {
+                    jinono.auto_input_update.flag = false;
                     if(d.code == 0){
                         return;
                     }
                 });
             }
         },
-        auto_radio:{
+        auto_radio_select:{
             url:'',
             flag:false,
             data:{},
             init:function (url,data) {
-                jinono.auto_radio.url = url;
+                jinono.auto_radio_select.url = url;
                 data = typeof data == 'object' ?  data : {};
-                jinono.auto_radio.data = data;
-                $('#auto_radio input').click(jinono.auto_radio.apply);
+                jinono.auto_radio_select.data = data;
+                $('#auto_radio_select input').click(jinono.auto_radio_select.apply);
             },
             apply:function () {
-                if(jinono.auto_radio.flag){
+                if(jinono.auto_radio_select.flag){
                     return;
                 }
-                jinono.auto_radio.flag = true;
+                jinono.auto_radio_select.flag = true;
 
-                jinono.auto_radio.data['id'] = parseInt($(this).attr('data-id'));
-                jinono.auto_radio.data['select'] = parseInt($(this).val());
+                jinono.auto_radio_select.data['id'] = parseInt($(this).attr('data-id'));
+                jinono.auto_radio_select.data['select'] = parseInt($(this).val());
 
-                jinono.requestEvent.apply(jinono.auto_radio.url,jinono.auto_radio.data,'POST',function (d) {
-                    jinono.auto_radio.flag = false;
+                jinono.requestEvent.apply(jinono.auto_radio_select.url,jinono.auto_radio_select.data,'POST',function (d) {
+                    jinono.auto_radio_select.flag = false;
                     if(d.code == 0){
                         return;
                     }
