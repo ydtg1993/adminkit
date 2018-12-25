@@ -25,7 +25,7 @@ class CheckAdmin
         //登录检查
         $is_login = UserActive::check($user_info);
         if(!$is_login){
-            return Redirect::to('/login');
+            return Redirect::to('login');
         }
         Controller::$data['user_info'] = $user_info;
 

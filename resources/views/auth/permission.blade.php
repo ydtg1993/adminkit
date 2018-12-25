@@ -9,7 +9,7 @@
             <div class="uk-card uk-card-default uk-card-hover uk-card-body" style="padding: 10px 40px">
                 <h3 class="uk-card-title">{{$controller}}</h3>
                 <p>
-                    <div id="auto_radio_select" class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
+                    <div class="auto_radio_select" class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
                         @foreach($permission as $p)
                             <div>
                                 <div class="uk-card uk-card-primary uk-card-body uk-card-hover" style="padding: 10px 40px;">

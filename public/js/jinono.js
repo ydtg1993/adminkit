@@ -1,23 +1,24 @@
-( function( window ) {
+(function (window) {
 
     'use strict';
 
     var jinono = {
-        base_url:'http://'+window.location.host,
-        now_time:function () {
+        base_url: 'http://' + window.location.host,
+        now_time: function () {
             return (Date.parse(new Date()) / 1000);
         },
-        prompt:function () {
+        prompt: function () {
 
         },
         requestEvent: {
-            apply: function (url,data,method,callback) {
-                method = typeof method !== 'undefined' ?  method : 'POST';
-                callback = typeof callback == 'function' ?  callback : function (d) {};
+            apply: function (url, data, method, callback) {
+                method = typeof method !== 'undefined' ? method : 'POST';
+                callback = typeof callback == 'function' ? callback : function (d) {
+                };
                 data._token = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
-                    dataType : 'json',
+                    dataType: 'json',
                     type: method,
                     url: url,
                     data: data,
@@ -28,36 +29,36 @@
             }
         },
         login: {
-            url:'',
-            redirect:'',
-            data:{},
-            sub_flag:false,
-            init:function (url,redirect) {
+            url: '',
+            redirect: '',
+            data: {},
+            sub_flag: false,
+            init: function (url, redirect) {
                 jinono.login.url = url;
                 jinono.login.redirect = redirect;
                 $('#login input').change(jinono.login.change_event);
                 $('#login #submit').click(jinono.login.submit_event);
             },
-            change_event:function () {
+            change_event: function () {
                 var name = $(this).prop('name');
                 var val = $(this).val();
                 jinono.login.data[name] = val;
 
-                if($(this).val()){
+                if ($(this).val()) {
                     $(this).parent().addClass('input--filled');
                     return;
                 }
                 $(this).parent().removeClass('input--filled');
             },
-            submit_event:function () {
-                if(jinono.login.sub_flag){
+            submit_event: function () {
+                if (jinono.login.sub_flag) {
                     return;
                 }
                 jinono.login.sub_flag = true;
 
-                jinono.requestEvent.apply(jinono.login.url,jinono.login.data,'POST',function (d) {
+                jinono.requestEvent.apply(jinono.login.url, jinono.login.data, 'POST', function (d) {
                     jinono.login.sub_flag = false;
-                    if(d.code == 0){
+                    if (d.code == 0) {
                         window.location.href = jinono.login.redirect;
                         return;
                     }
@@ -65,10 +66,10 @@
                 });
             }
         },
-        navigation:{
-            dom:null,
-            but:null,
-            init:function () {
+        navigation: {
+            dom: null,
+            but: null,
+            init: function () {
                 jinono.navigation.dom = $('#navigation');
                 jinono.navigation.but = $('#navigation_open');
 
@@ -79,54 +80,58 @@
                 $('#navigation_open').click(jinono.navigation.open);
                 jinono.navigation.listener();
             },
-            memory:function () {
+            memory: function () {
                 var navigation = localStorage.getItem("navigation");
-                if(navigation == 1){
-                    jinono.navigation.dom.css('display','block');
+                if (navigation == 1) {
+                    jinono.navigation.dom.css('display', 'block');
                     jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
-                    localStorage.setItem("navigation",1);
-                }else {
-                    jinono.navigation.dom.css('display','none');
+                    localStorage.setItem("navigation", 1);
+                } else {
+                    jinono.navigation.dom.css('display', 'none');
                 }
             },
-            close:function () {
+            close: function () {
                 var navigation = localStorage.getItem("navigation");
-                if(navigation == 0){
+                if (navigation == 0) {
                     return;
                 }
                 jinono.navigation.dom.addClass('uk-animation-slide-left-medium uk-animation-reverse');
-                localStorage.setItem("navigation",0);
+                localStorage.setItem("navigation", 0);
             },
-            open:function () {
+            open: function () {
                 var navigation = localStorage.getItem("navigation");
-                if(navigation == 1){
+                if (navigation == 1) {
                     return;
                 }
-                jinono.navigation.dom.css('display','block');
+                jinono.navigation.dom.css('display', 'block');
                 jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
-                localStorage.setItem("navigation",1);
+                localStorage.setItem("navigation", 1);
             },
-            listener:function () {
-                document.querySelector('#navigation').addEventListener("webkitAnimationEnd", function() {
+            listener: function () {
+                document.querySelector('#navigation').addEventListener("webkitAnimationEnd", function () {
                     var navigation = localStorage.getItem("navigation");
-                    if(navigation == 1){
+                    if (navigation == 1) {
                         jinono.navigation.dom.removeClass('uk-animation-slide-left-medium');
-                        jinono.navigation.but.css('display','none');
-                    }else {
-                        jinono.navigation.dom.css('display','none');
-                        jinono.navigation.but.css('display','block');
+                        jinono.navigation.but.css('display', 'none');
+                    } else {
+                        jinono.navigation.dom.css('display', 'none');
+                        jinono.navigation.but.css('display', 'block');
                         jinono.navigation.but.addClass('uk-animation-fade');
                     }
                 });
             }
         },
-        auto_input_update:{
-            url:'',
-            is_up:false,
-            flag:false,
-            init:function (url) {
+        auto_input_update: {
+            url: '',
+            is_up: false,
+            flag: false,
+            data: {},
+            init: function (url, data) {
                 jinono.auto_input_update.url = url;
-                var dom = $('#auto_input_update input');
+                data = typeof data == 'object' ? data : {};
+                jinono.auto_input_update.data = data;
+
+                var dom = $('.auto_input_update input');
                 dom.focus(function () {
                     jinono.auto_input_update.is_up = false;
                 });
@@ -135,40 +140,39 @@
                 });
                 dom.blur(jinono.auto_input_update.apply);
             },
-            apply:function () {
-                if(jinono.auto_input_update.flag){
+            apply: function () {
+                if (jinono.auto_input_update.flag) {
                     return;
                 }
-                if(jinono.auto_input_update.is_up == false){
+                if (jinono.auto_input_update.is_up == false) {
                     return;
                 }
-                var data = {
-                    'id':parseInt($(this).attr('data-id'))
-                };
+
+                jinono.auto_input_update.data['id'] = parseInt($(this).attr('data-id'));
                 var name = $(this).prop('name');
-                data[name] = $(this).val();
+                jinono.auto_input_update.data[name] = $(this).val();
 
                 jinono.auto_input_update.flag = true;
-                jinono.requestEvent.apply(jinono.auto_input_update.url,data,'POST',function (d) {
+                jinono.requestEvent.apply(jinono.auto_input_update.url, jinono.auto_input_update.data, 'POST', function (d) {
                     jinono.auto_input_update.flag = false;
-                    if(d.code == 0){
+                    if (d.code == 0) {
                         return;
                     }
                 });
             }
         },
-        auto_radio_select:{
-            url:'',
-            flag:false,
-            data:{},
-            init:function (url,data) {
+        auto_radio_select: {
+            url: '',
+            flag: false,
+            data: {},
+            init: function (url, data) {
                 jinono.auto_radio_select.url = url;
-                data = typeof data == 'object' ?  data : {};
+                data = typeof data == 'object' ? data : {};
                 jinono.auto_radio_select.data = data;
-                $('#auto_radio_select input').click(jinono.auto_radio_select.apply);
+                $('.auto_radio_select input').click(jinono.auto_radio_select.apply);
             },
-            apply:function () {
-                if(jinono.auto_radio_select.flag){
+            apply: function () {
+                if (jinono.auto_radio_select.flag) {
                     return;
                 }
                 jinono.auto_radio_select.flag = true;
@@ -176,9 +180,9 @@
                 jinono.auto_radio_select.data['id'] = parseInt($(this).attr('data-id'));
                 jinono.auto_radio_select.data['select'] = parseInt($(this).val());
 
-                jinono.requestEvent.apply(jinono.auto_radio_select.url,jinono.auto_radio_select.data,'POST',function (d) {
+                jinono.requestEvent.apply(jinono.auto_radio_select.url, jinono.auto_radio_select.data, 'POST', function (d) {
                     jinono.auto_radio_select.flag = false;
-                    if(d.code == 0){
+                    if (d.code == 0) {
                         return;
                     }
                 });
@@ -186,10 +190,10 @@
         }
     };
 
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( jinono );
+        define(jinono);
     } else {
         window.jinono = jinono;
     }
-})( window );
+})(window);
