@@ -111,7 +111,8 @@ class Auth extends Controller
             'name' => '',
             'access' => 0,
             'view' => 0,
-            'sort' => 0
+            'sort' => 0,
+            'description' => ''
         ];
         $p_nav = Permissions::getInfoWhere(['controller' => $class_name, 'p_id' => 0]);
         if ($p_nav) {
