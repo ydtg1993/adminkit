@@ -10,6 +10,14 @@
         prompt: function () {
 
         },
+        redirect:{
+            init:function () {
+                $('.redirect_button').click(jinono.redirect.apply);
+            },
+            apply:function () {
+                window.location.href = $(this).attr('data-href');
+            }
+        },
         requestEvent: {
             apply: function (url, data, method, callback) {
                 method = typeof method !== 'undefined' ? method : 'POST';

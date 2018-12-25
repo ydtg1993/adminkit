@@ -22,6 +22,7 @@
     <script>
         $(function () {
             jinono.navigation.init();
+            jinono.redirect.init();
         })
     </script>
 </head>
