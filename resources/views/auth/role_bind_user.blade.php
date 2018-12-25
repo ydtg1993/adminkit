@@ -5,7 +5,6 @@
 @section('content')
     <div>
         <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-            <h3 class="uk-card-title">角色绑定</h3>
             <p>
             <table class="uk-table uk-table-striped">
                 <thead>
@@ -23,7 +22,7 @@
                         <td>{{$user['user_id']}}</td>
                         <td>{{$user['role_id']}}</td>
                         <td>
-                            <a type="button" data-usr="{{$user['user_id']}}">删除</a>
+                            <button class="uk-button uk-button-danger uk-button-small" type="button">删除用户</button>
                         </td>
                     </tr>
                 @endforeach
