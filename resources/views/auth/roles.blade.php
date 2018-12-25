@@ -21,8 +21,8 @@
                         <td>{{$role['id']}}</td>
                         <td>{{$role['name']}}</td>
                         <td>
-                            <button class="uk-button uk-button-default uk-button-small" type="button"><a href="{{url('Auth.roleBindUser/'.$role['id'])}}">绑定用户</a></button>
-                            <button class="uk-button uk-button-default uk-button-small" type="button"><a href="{{url('Auth.permission/'.$role['id'])}}">权限设置</a></button>
+                            <button data-href="{{url('Auth.roleBindUser/'.$role['id'])}}" class="uk-button uk-button-default uk-button-small" type="button">绑定用户</button>
+                            <button data-href="{{url('Auth.permission/'.$role['id'])}}" class="uk-button uk-button-default uk-button-small" type="button">权限设置</button>
                             <button class="uk-button uk-button-danger uk-button-small" type="button">删除角色</button>
                         </td>
                     </tr>
