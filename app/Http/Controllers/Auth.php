@@ -15,9 +15,11 @@ use App\Http\Model\Roles;
 use App\Http\Model\User;
 use App\Http\Model\UserRole;
 use App\Libs\Helper\Func;
-use Illuminate\Support\Facades\Redirect;
-use Symfony\Component\Console\Helper\Helper;
 
+/**
+ * Class Auth
+ * @package App\Http\Controllers
+ */
 class Auth extends Controller
 {
     public function login()
