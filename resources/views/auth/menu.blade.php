@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                 @foreach($data as $d)
-                    <tr>
+                    <tr class="auto_input_update">
                         <td>{{$d['id']}}</td>
                         <td>{{$d['p_id']}}</td>
                         <td>{{$d['controller']}}</td>
