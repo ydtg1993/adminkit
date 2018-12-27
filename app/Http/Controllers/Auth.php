@@ -263,6 +263,52 @@ class Auth extends Controller
         return view('auth/roles', self::$data);
     }
 
+    public function operateRole()
+    {
+        if (self::$REQUEST->ajax()) {
+            if (!self::$REQUEST->has('id')) {
+                //add
+                if (!self::$REQUEST->has('name')) {
+                    return self::$RESPONSE->result(5001);
+                }
+                if (!self::$REQUEST->has('description')) {
+                    return self::$RESPONSE->result(5001);
+                }
+                $id = Roles::add([
+                    'name'=>self::$REQUEST->input('name'),
+                    'description'=>self::$REQUEST->input('description')
+                ]);
+                if (!$id) {
+                    return self::$RESPONSE->result(5005);
+                }
+
+                return self::$RESPONSE->result(0);
+            }
+            $id = self::$REQUEST->input('id');
+            $command = self::$REQUEST->input('command');
+
+            //del
+            if ($command == 'del') {
+                $result = Roles::delInfoWhere(['id' => $id]);
+                if (!$result) {
+                    return self::$RESPONSE->result(5005);
+                }
+                return self::$RESPONSE->result(0);
+            }
+
+            $data = [];
+            if(self::$REQUEST->has('name')){
+                $data['name'] = self::$REQUEST->input('name');
+            }
+            if(self::$REQUEST->has('description')){
+                $data['description'] = self::$REQUEST->input('description');
+            }
+
+            Roles::upInfoWhere($data,['id'=>$id]);
+            return self::$RESPONSE->result(0);
+        }
+    }
+
     public function roleBindUser()
     {
         if (self::$REQUEST->ajax()) {

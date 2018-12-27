@@ -30,4 +30,5 @@ $router->group(['middleware' => 'CheckAdminLogin'], function () use ($router) {
     $router->get('Auth.userList', 'Auth@userList');
 
     $router->post('Auth.operateUser', 'Auth@operateUser');
+    $router->post('Auth.operateRole', 'Auth@operateRole');
 });
