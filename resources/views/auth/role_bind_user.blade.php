@@ -26,16 +26,6 @@
                         </td>
                     </tr>
                 @endforeach
-                <tr data-id="{{$user['role_id']}}">
-                    <td>新增用户</td>
-                    <td>
-                        <div class="uk-margin">
-                            <input name="user_id" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" placeholder="user_id" />
-                        </div>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
                 </tbody>
             </table>
             </p>
