@@ -32,10 +32,10 @@
                 <tr class="input_update">
                     <td>新增角色</td>
                     <td>
-                        <input name="name" style="width: 160px" class="uk-input uk-form-width-medium uk-form-small" placeholder="角色名" />
+                        <input name="name" style="width: 180px" class="uk-input uk-form-width-medium uk-form-small" placeholder="角色名" />
                     </td>
                     <td>
-                        <input name="description" style="width: 160px" class="uk-input uk-form-width-medium uk-form-small" placeholder="描述" />
+                        <input name="description" style="width: 180px" class="uk-input uk-form-width-medium uk-form-small" placeholder="描述" />
                     </td>
                     <td>
                         <button class="uk-button uk-button-primary uk-button-small commit" type="button">保存角色</button>
