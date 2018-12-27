@@ -56,10 +56,10 @@
         <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">菜单</font></font>
         <a id="navigation_close" href="javascript:void(0);" style="float: right"><span uk-icon="icon: arrow-left; ratio: 1.3"></span></a>
     </h3>
-    <ul uk-accordion="multiple: true">
+    <ul uk-accordion="multiple: true;">
         @foreach($navigation as $p_nav)
-        <li class="uk-open">
-            <a class="uk-accordion-title" href="#">{{$p_nav['name']}}</a>
+        <li>
+            <a class="uk-accordion-title">{{$p_nav['name']}}</a>
             <div class="uk-accordion-content">
                 <ul class="uk-list">
                     @foreach($p_nav['navs'] as $nav)
