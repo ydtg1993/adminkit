@@ -26,13 +26,13 @@
                         <td><input data-id="{{$user['id']}}" name="password" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['password']}}" /></td>
                         <td>
                             <div class="uk-inline">
-                                <button class="uk-button uk-button-secondary uk-button-small" type="button">{{$user['role_name'] ? $user['role_name'] : '请选择角色'}}</button>
-                                <div uk-dropdown="mode: click">
-                                    <ul class="uk-nav uk-dropdown-nav">
+                                <div class="uk-margin">
+                                    <select class="uk-select" style="height: 30px;">
+                                        <option value="0">选择角色</option>
                                         @foreach($roles as $role)
-                                        <li {{ $user['role_id'] == $role['id'] ? 'class=uk-active' : '' }}><a href="javascript:void(0);">{{$role['name']}}</a></li>
+                                            <option {{ $user['role_id'] == $role['id'] ? 'selected=selected' : '' }} value="{{$role['id']}}">{{$role['name']}}</option>
                                         @endforeach
-                                    </ul>
+                                    </select>
                                 </div>
                             </div>
                         </td>
@@ -54,14 +54,12 @@
                     </td>
                     <td>
                         <div class="uk-inline">
-                            <button class="uk-button uk-button-secondary uk-button-small" type="button">请选择角色</button>
-                            <div uk-dropdown="mode: click">
-                                <ul class="uk-nav uk-dropdown-nav">
-                                    @foreach($roles as $role)
-                                        <li><a href="javascript:void(0);">{{$role['name']}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                            <select class="uk-select" style="height: 30px;">
+                                <option value="0">选择角色</option>
+                                @foreach($roles as $role)
+                                    <option value="{{$role['id']}}">{{$role['name']}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </td>
                     <td>
@@ -76,7 +74,12 @@
     <script>
         $(function () {
             jinono.auto_input_update.init('{{url('Auth.operateUser')}}');
-            jinono.input_update.init('{{url('Auth.operateUser')}}');
+            jinono.input_update.init('{{url('Auth.operateUser')}}',{},function () {
+                $('.uk-select').change(function () {
+                   var role_id = $(this).find("option:selected").val();
+                    jinono.input_update.data['role_id'] = role_id;
+                });
+            });
         });
     </script>
 

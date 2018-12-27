@@ -134,10 +134,13 @@
             is_up: false,
             flag: false,
             data: {},
-            init: function (url, data) {
+            init: function (url, data,callback) {
                 jinono.auto_input_update.url = url;
                 data = typeof data == 'object' ? data : {};
+                callback = typeof callback == 'function' ? callback : function () {
+                };
                 jinono.auto_input_update.data = data;
+                callback();
 
                 var dom = $('.auto_input_update input');
                 dom.focus(function () {
@@ -201,10 +204,13 @@
             is_up: false,
             flag: false,
             data: {},
-            init: function (url, data) {
+            init: function (url, data,callback) {
                 jinono.input_update.url = url;
                 data = typeof data == 'object' ? data : {};
+                callback = typeof callback == 'function' ? callback : function () {
+                };
                 jinono.input_update.data = data;
+                callback();
 
                 var dom = $('.input_update input');
                 dom.focus(function () {
