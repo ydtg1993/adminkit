@@ -15,7 +15,9 @@ class User extends BaseModel
 
     public static function getAllWithRoleWhere(array $where = [])
     {
-        $data= self::where($where)->leftJoin('user_role', 'users.id', '=', 'user_role.user_id')->get();
+        $data= self::where($where)->leftJoin('user_role', 'users.id', '=', 'user_role.user_id')
+            ->select(['users.*','user_role.role_id'])
+            ->get();
         if($data){
             return $data->toArray();
         }

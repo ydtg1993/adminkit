@@ -93,6 +93,16 @@ class Auth extends Controller
 
                 $list[$class_name][] = $data;
             }
+
+            if(empty($list[$class_name])){
+                continue;
+            }
+            $p_data = Func::getQuery2Array($permission_infos, ['controller' => $class_name, 'p_id' => 0]);
+            if(empty($p_data)){
+                $p_data = Permissions::getInfoWhere(['controller' => $class_name, 'p_id' => 0]);
+            }
+            $p_data['exists'] = true;
+            array_unshift($list[$class_name],$p_data);
         }
         //自动清除
         foreach ($permission_infos as $permission_info) {
@@ -184,6 +194,7 @@ class Auth extends Controller
     {
         if (self::$REQUEST->ajax()) {
             $data = [];
+            $token = Func::createToken();
             if (!self::$REQUEST->has('id')) {
                 //add
                 if (!self::$REQUEST->has('name')) {
@@ -199,7 +210,8 @@ class Auth extends Controller
                 $result = User::add([
                     'name' => self::$REQUEST->input('name'),
                     'account' => self::$REQUEST->input('account'),
-                    'password' => self::$REQUEST->input('password')
+                    'token' => $token,
+                    'password' => Func::packPassword(self::$REQUEST->input('password'),$token)
                 ]);
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
@@ -225,7 +237,8 @@ class Auth extends Controller
                 $data['account'] = self::$REQUEST->input('account');
             }
             if (self::$REQUEST->has('password')) {
-                $data['password'] = self::$REQUEST->input('password');
+                $token = User::getInfoWhere(['id' => $user_id],['token']);
+                $data['password'] = Func::packPassword(self::$REQUEST->input('password'),$token);
             }
             $result = User::upInfoWhere($data, ['id' => $user_id]);
             if (!$result) {

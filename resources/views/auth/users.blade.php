@@ -19,14 +19,14 @@
                 </thead>
                 <tbody>
                 @foreach($users as $user)
-                    <tr>
+                    <tr class="auto_input_update">
                         <td>{{$user['id']}}</td>
-                        <td><input name="name" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['name']}}" /></td>
-                        <td><input name="account" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['account']}}" /></td>
-                        <td><input name="password" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['password']}}" /></td>
+                        <td><input data-id="{{$user['id']}}" name="name" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['name']}}" /></td>
+                        <td><input data-id="{{$user['id']}}" name="account" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['account']}}" /></td>
+                        <td><input data-id="{{$user['id']}}" name="password" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$user['password']}}" /></td>
                         <td>
                             <div class="uk-inline">
-                                <button class="uk-button uk-button-secondary uk-button-small" type="button">{{$user['role_name']}}</button>
+                                <button class="uk-button uk-button-secondary uk-button-small" type="button">{{$user['role_name'] ? $user['role_name'] : '请选择角色'}}</button>
                                 <div uk-dropdown="mode: click">
                                     <ul class="uk-nav uk-dropdown-nav">
                                         @foreach($roles as $role)
@@ -41,7 +41,7 @@
                         </td>
                     </tr>
                 @endforeach
-                <tr>
+                <tr class="input_update">
                     <td>新增角色</td>
                     <td>
                         <input name="name" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" placeholder="角色名" />
@@ -54,7 +54,7 @@
                     </td>
                     <td>
                         <div class="uk-inline">
-                            <button class="uk-button uk-button-secondary uk-button-small" type="button">选择角色</button>
+                            <button class="uk-button uk-button-secondary uk-button-small" type="button">请选择角色</button>
                             <div uk-dropdown="mode: click">
                                 <ul class="uk-nav uk-dropdown-nav">
                                     @foreach($roles as $role)
@@ -65,7 +65,7 @@
                         </div>
                     </td>
                     <td>
-                        <button class="uk-button uk-button-primary uk-button-small" type="button">保存信息</button>
+                        <button class="uk-button uk-button-primary uk-button-small commit" type="button">保存信息</button>
                     </td>
                 </tr>
                 </tbody>
@@ -75,8 +75,8 @@
     </div>
     <script>
         $(function () {
-            var url = '{{url('Auth.operateUser')}}';
-            jinono.auto_input_update.init(url);
+            jinono.auto_input_update.init('{{url('Auth.operateUser')}}');
+            jinono.input_update.init('{{url('Auth.operateUser')}}');
         });
     </script>
 

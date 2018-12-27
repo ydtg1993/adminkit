@@ -195,6 +195,48 @@
                     }
                 });
             }
+        },
+        input_update: {
+            url: '',
+            is_up: false,
+            flag: false,
+            data: {},
+            init: function (url, data) {
+                jinono.input_update.url = url;
+                data = typeof data == 'object' ? data : {};
+                jinono.input_update.data = data;
+
+                var dom = $('.input_update input');
+                dom.focus(function () {
+                    jinono.input_update.is_up = false;
+                });
+                dom.change(function () {
+                    jinono.input_update.is_up = true;
+                });
+                dom.blur(jinono.input_update.apply);
+
+                $('.input_update .commit').click(jinono.input_update.commit)
+            },
+            apply: function () {
+                if (jinono.input_update.is_up == false) {
+                    return;
+                }
+
+                var name = $(this).prop('name');
+                jinono.input_update.data[name] = $(this).val();
+            },
+            commit:function () {
+                if (jinono.input_update.flag) {
+                    return;
+                }
+                jinono.input_update.flag = true;
+                jinono.requestEvent.apply(jinono.input_update.url, jinono.input_update.data, 'POST', function (d) {
+                    jinono.input_update.flag = false;
+                    if (d.code == 0) {
+                        return;
+                    }
+                });
+            }
         }
     };
 
