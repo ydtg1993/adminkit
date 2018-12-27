@@ -167,8 +167,10 @@
                 jinono.requestEvent.apply(jinono.auto_input_update.url, jinono.auto_input_update.data, 'POST', function (d) {
                     jinono.auto_input_update.flag = false;
                     if (d.code == 0) {
+                        UIkit.notification({message: d.msg, status: 'primary',timeout:1000});
                         return;
                     }
+                    UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
                 });
             }
         },
@@ -194,8 +196,10 @@
                 jinono.requestEvent.apply(jinono.auto_radio_select.url, jinono.auto_radio_select.data, 'POST', function (d) {
                     jinono.auto_radio_select.flag = false;
                     if (d.code == 0) {
+                        UIkit.notification({message: d.msg, status: 'primary',timeout:1000});
                         return;
                     }
+                    UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
                 });
             }
         },
@@ -239,8 +243,10 @@
                 jinono.requestEvent.apply(jinono.input_update.url, jinono.input_update.data, 'POST', function (d) {
                     jinono.input_update.flag = false;
                     if (d.code == 0) {
+                        window.location.reload();
                         return;
                     }
+                    UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
                 });
             }
         }
