@@ -261,9 +261,7 @@
                 jinono.requestEvent.apply(jinono.auto_check.url, jinono.auto_check.data, 'POST', function (d) {
                     jinono.auto_check.flag = false;
                     if (d.code == 0) {
-                        if(jinono.auto_check.data["notify"]){
-                            UIkit.notification({message: d.msg, status: 'info',timeout:1000});
-                        }
+                        UIkit.notification({message: d.msg, status: 'info',timeout:1000});
                         return;
                     }
                     UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
