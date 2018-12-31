@@ -348,8 +348,10 @@ class Auth extends Controller
         }
 
         $role_id = self::$REQUEST->route('role_id');
-        $users = UserRole::getAllWhere(['role_id' => $role_id]);
+        $role = Roles::getInfoWhere(['id'=>$role_id]);
+        $users = UserRole::getAllWithUser(['role_id' => $role_id]);
 
+        self::$data['role'] = $role;
         self::$data['users'] = $users;
         return view('auth/role_bind_user', self::$data);
     }

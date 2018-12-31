@@ -13,5 +13,15 @@ class UserRole extends BaseModel
 {
     protected $table = 'user_role';
 
+    public static function getAllWithUser(array $where = [])
+    {
+        $data = self::join('users','users.id', '=', 'user_role.user_id')
+            ->where($where)
+            ->select('users.name', 'users.account', 'user_role.*')->get();
+        if($data){
+            return $data->toArray();
+        }
 
+        return [];
+    }
 }
