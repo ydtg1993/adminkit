@@ -207,18 +207,18 @@ class Auth extends Controller
                     return self::$RESPONSE->result(5001);
                 }
 
-                $id = User::add([
+                $user_id = User::add([
                     'name' => self::$REQUEST->input('name'),
                     'account' => self::$REQUEST->input('account'),
                     'token' => $token,
                     'password' => Func::packPassword(self::$REQUEST->input('password'), $token)
                 ]);
-                if (!$id) {
+                if (!$user_id) {
                     return self::$RESPONSE->result(5005);
                 }
                 if (self::$REQUEST->has('role_id')) {
                     UserRole::add([
-                        'user_id' => $id,
+                        'user_id' => $user_id,
                         'role_id' => self::$REQUEST->input('role_id')
                     ]);
                 }
@@ -237,6 +237,19 @@ class Auth extends Controller
                 return self::$RESPONSE->result(0);
             }
             //update
+            if (self::$REQUEST->has('role_id')) {
+                $result = UserRole::updateOrCreate([
+                    'user_id' => $user_id,
+                ], [
+                    'user_id' => $user_id,
+                    'role_id' => self::$REQUEST->input('role_id')
+                ]);
+                if (!$result) {
+                    return self::$RESPONSE->result(5005);
+                }
+                return self::$RESPONSE->result(0);
+            }
+
             if (self::$REQUEST->has('name')) {
                 $data['name'] = self::$REQUEST->input('name');
             }

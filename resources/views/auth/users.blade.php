@@ -31,10 +31,12 @@
                         </td>
                         <td>
                             <div class="uk-inline">
-                                <select class="uk-select" style="height: 30px;">
+                                <select class="uk-select auto_select" style="height: 30px;">
                                     <option value="0">选择角色</option>
                                     @foreach($roles as $role)
-                                        <option {{ $user['role_id'] == $role['id'] ? 'selected=selected' : '' }} value="{{$role['id']}}">{{$role['name']}}</option>
+                                        <option {{ $user['role_id'] == $role['id'] ? 'selected=selected' : '' }}
+                                                data-v={"id":{{$user['id']}},"role_id":{{$role['id']}}}
+                                                value="{{$role['id']}}">{{$role['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -87,6 +89,7 @@
                     jinono.input_update.data['role_id'] = role_id;
                 });
             });
+            jinono.auto_select.init(url);
             jinono.delete.init('确定删除用户！',url,{'command':'del'});
         });
     </script>

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class BaseModel extends Model
 {
     public $timestamps = false;
+    protected $guarded = ['id'];
 
     public static function batchAdd($data)
     {

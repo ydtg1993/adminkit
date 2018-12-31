@@ -202,6 +202,36 @@
                 });
             }
         },
+        auto_select: {
+            url: '',
+            flag: false,
+            data: {},
+            init: function (url, data) {
+                jinono.auto_select.url = url;
+                data = typeof data == 'object' ? data : {};
+                jinono.auto_select.data = data;
+                $('.auto_select').change(jinono.auto_select.apply);
+            },
+            apply: function () {
+                if (jinono.auto_select.flag) {
+                    return;
+                }
+                jinono.auto_select.flag = true;
+                var _this = $(this).find("option:selected");
+                var data_v = JSON.parse(_this.attr("data-v"));
+                jinono.auto_select.data = Object.assign(jinono.auto_select.data,data_v);
+                jinono.auto_select.data['select'] = parseInt(_this.val());
+
+                jinono.requestEvent.apply(jinono.auto_select.url, jinono.auto_select.data, 'POST', function (d) {
+                    jinono.auto_select.flag = false;
+                    if (d.code == 0) {
+                        UIkit.notification({message: d.msg, status: 'primary',timeout:1000});
+                        return;
+                    }
+                    UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
+                });
+            }
+        },
         input_update: {
             url: '',
             is_up: false,
