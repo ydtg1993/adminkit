@@ -17,11 +17,11 @@
                                     <p>
                                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                             <label>
-                                                <input class="uk-radio" data-id="{{$p['id']}}" type="radio" name="{{$controller.'@'.$p['action']}}" value="1" @if($p['isset'] == 1)checked="checked"@endif>
+                                                <input class="uk-radio" data-v={"id":{{$p['id']}}} type="radio" name="{{$controller.'@'.$p['action']}}" value="1" @if($p['isset'] == 1)checked="checked"@endif>
                                                 <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 开</font></font>
                                             </label>
                                             <label>
-                                                <input class="uk-radio" data-id="{{$p['id']}}" type="radio" name="{{$controller.'@'.$p['action']}}" value="0" @if($p['isset'] == 0)checked="checked"@endif>
+                                                <input class="uk-radio" data-v={"id":{{$p['id']}}} type="radio" name="{{$controller.'@'.$p['action']}}" value="0" @if($p['isset'] == 0)checked="checked"@endif>
                                                 <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 关</font></font>
                                             </label>
                                         </div>

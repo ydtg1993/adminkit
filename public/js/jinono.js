@@ -156,7 +156,8 @@
                     return;
                 }
 
-                jinono.auto_input_update.data['id'] = parseInt($(this).attr('data-id'));
+                var data_v = JSON.parse($(this).attr("data-v"));
+                jinono.auto_input_update.data = Object.assign(jinono.auto_input_update.data,data_v);
                 var name = $(this).prop('name');
                 jinono.auto_input_update.data[name] = $(this).val();
 
@@ -187,7 +188,8 @@
                 }
                 jinono.auto_radio_select.flag = true;
 
-                jinono.auto_radio_select.data['id'] = parseInt($(this).attr('data-id'));
+                var data_v = JSON.parse($(this).attr("data-v"));
+                jinono.auto_radio_select.data = Object.assign(jinono.auto_radio_select.data,data_v);
                 jinono.auto_radio_select.data['select'] = parseInt($(this).val());
 
                 jinono.requestEvent.apply(jinono.auto_radio_select.url, jinono.auto_radio_select.data, 'POST', function (d) {
@@ -263,7 +265,7 @@
                     e.target.blur();
                     var data_v = JSON.parse(e.target.getAttribute("data-v"));
                     jinono.delete.data = Object.assign(data,data_v);
-                    console.log(jinono.delete.data)
+
                     UIkit.modal.confirm(warn).then(function () {
                         jinono.delete.apply();
                     }, function () {

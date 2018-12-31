@@ -21,12 +21,12 @@
                 @foreach($users as $user)
                     <tr class="auto_input_update">
                         <td>{{$user['id']}}</td>
-                        <td><input data-id="{{$user['id']}}" name="name" style="width: 180px" maxlength="16"
+                        <td><input data-v={"id":{{$user['id']}}} name="name" style="width: 180px" maxlength="16"
                                    class="uk-input uk-form-width-medium uk-form-small" value="{{$user['name']}}"/></td>
-                        <td><input data-id="{{$user['id']}}" name="account" style="width: 180px" maxlength="16"
+                        <td><input data-v={"id":{{$user['id']}}} name="account" style="width: 180px" maxlength="16"
                                    class="uk-input uk-form-width-medium uk-form-small" value="{{$user['account']}}"/>
                         </td>
-                        <td><input data-id="{{$user['id']}}" name="password" style="width: 180px" maxlength="16"
+                        <td><input data-v={"id":{{$user['id']}}} name="password" style="width: 180px" maxlength="16"
                                    class="uk-input uk-form-width-medium uk-form-small" value="{{$user['password']}}"/>
                         </td>
                         <td>

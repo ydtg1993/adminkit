@@ -30,17 +30,17 @@
                         <td>{{$d['action']}}</td>
                         <td style="width: 120px">
                             <div class="uk-margin">
-                                <input data-id="{{$d['id']}}" name="name" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['name']}}" />
+                                <input data-v={"id":{{$d['id']}}} name="name" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['name']}}" />
                             </div>
                         </td>
                         <td style="width: 120px">
                             <div class="uk-margin">
-                                <input data-id="{{$d['id']}}" name="view" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['view']}}" />
+                                <input data-v={"id":{{$d['id']}}} name="view" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['view']}}" />
                             </div>
                         </td>
                         <td style="width: 120px">
                             <div class="uk-margin">
-                                <input data-id="{{$d['id']}}" name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
+                                <input data-v={"id":{{$d['id']}}} name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
                             </div>
                         </td>
                         <td>{{$d['description']}}</td>

@@ -20,8 +20,8 @@
                 @foreach($roles as $role)
                     <tr class="auto_input_update">
                         <td>{{$role['id']}}</td>
-                        <td><input data-id="{{$role['id']}}" name="name" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$role['name']}}" /></td>
-                        <td><input data-id="{{$role['id']}}" name="description" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$role['description']}}" /></td>
+                        <td><input data-id={"id":{{$role['id']}}} name="name" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$role['name']}}" /></td>
+                        <td><input data-id={"id":{{$role['id']}}} name="description" style="width: 180px" maxlength="16" class="uk-input uk-form-width-medium uk-form-small" value="{{$role['description']}}" /></td>
                         <td>
                             <button data-href="{{url('Auth.roleBindUser/'.$role['id'])}}" class="uk-button uk-button-default uk-button-small redirect_button" type="button">绑定用户</button>
                             <button data-href="{{url('Auth.permission/'.$role['id'])}}" class="uk-button uk-button-default uk-button-small redirect_button" type="button">权限设置</button>
