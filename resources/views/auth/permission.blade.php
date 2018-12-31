@@ -10,23 +10,27 @@
                 <h3 class="uk-card-title">{{$controller}}</h3>
                 <p>
                     <div class="uk-child-width-1-6 uk-grid-small uk-grid-match" uk-grid>
-                        <div>
+                        <div class="auto_check">
                             <div class="uk-card uk-card-secondary uk-card-body uk-card-hover" style="padding: 10px 40px;">
                                 <h3 class="uk-card-title">全选</h3>
                              <p>
                                 <label>
-                        <input data-v={"controller":{{$controller}}} data-k="view" name="view"
-                               class="uk-checkbox"
-                               type="checkbox">
-                        开启
-                    </label>
+                                    <input data-v={"controller":"{{$controller}}"} data-k="checked" name="view"
+                                           class="uk-checkbox" @if($permissions[$controller]['all'] == 1)checked="checked"@endif
+                                           type="checkbox">
+                                    开启
+                                </label>
                             </p>
                         </div>
                     </div>
-                        @foreach($permission as $p)
+
+                        @foreach($permission as $k=>$p)
+                            @if($k == 'all')
+                                @continue
+                            @endif
                             <div class="auto_radio_select">
                                 <div class="uk-card uk-card-primary uk-card-body uk-card-hover" style="padding: 10px 40px;">
-                                    <h3 class="uk-card-title">{{$p['action'] ? $p['action'] : '全选'}}</h3>
+                                    <h3 class="uk-card-title">{{$p['action'] ? $p['action'] : $p['controller']}}</h3>
                                     <p>
                                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                             <label>
@@ -51,6 +55,7 @@
     <script>
         $(function () {
            jinono.auto_radio_select.init('{{url('Auth.permission')}}',{role_id:'{{$role['id']}}'});
+           jinono.auto_check.init('{{url('Auth.permission')}}',{role_id:'{{$role['id']}}','notify':true});
         });
     </script>
 @stop

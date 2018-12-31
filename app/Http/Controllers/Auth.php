@@ -362,46 +362,48 @@ class Auth extends Controller
             $role_id = self::$REQUEST->input('role_id');
             $permission_id = self::$REQUEST->input('id');
             $select = self::$REQUEST->input('select');
+            $controller = self::$REQUEST->input('controller');
+            $checked = self::$REQUEST->input('checked');
 
-            $p_nav = Permissions::getInfoWhere(['id' => $permission_id, 'p_id' => 0], ['id']);
             $add_permissions_data = [];
             $del_permissions_data = [];
-            if ($p_nav) {
-                $all_permissions = RolePermission::getAllPermissionToRole($role_id, $p_nav['id']);
-                $add_permissions_data[] = ['role_id' => (int)$role_id, 'permission_id' => $p_nav['id']];
-                $del_permissions_data[] = ['role_id' => (int)$role_id, 'permission_id' => $p_nav['id']];
+            //批量
+            if (self::$REQUEST->has('controller')) {
+                $all_permissions = RolePermission::getAllPermissionOfController($controller);
                 foreach ($all_permissions as $permission) {
                     if ($permission['role_id'] != $role_id) {
                         $add_permissions_data[] = [
                             'role_id' => (int)$role_id,
                             'permission_id' => $permission['id']
                         ];
-                    } elseif ($permission['role_id'] == $role_id) {
+                    }elseif ($permission['role_id'] == $role_id){
                         $del_permissions_data[] = [
                             'role_id' => (int)$role_id,
-                            'permission_id' => $permission['permission_id']
+                            'permission_id' => $permission['id']
                         ];
                     }
                 }
-            }
-            //add
-            if ($select == 1) {
-                if ($add_permissions_data) {
+                $result = false;
+                if($checked == 1 && $add_permissions_data){
                     $result = RolePermission::batchAdd($add_permissions_data);
-                }else{
-                    $result = RolePermission::add(['role_id' => $role_id, 'permission_id' => $permission_id]);
+                }elseif($checked == 0 && $del_permissions_data){
+                    $result = RolePermission::batchDel($del_permissions_data);
                 }
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }
                 return self::$RESPONSE->result(0);
             }
-            //del
-            if ($del_permissions_data) {
-                $result = RolePermission::batchDel($del_permissions_data);
-            } else {
-                $result = RolePermission::delInfoWhere(['role_id' => $role_id, 'permission_id' => $permission_id]);
+            //add
+            if ($select == 1) {
+                $result = RolePermission::add(['role_id' => $role_id, 'permission_id' => $permission_id]);
+                if (!$result) {
+                    return self::$RESPONSE->result(5005);
+                }
+                return self::$RESPONSE->result(0);
             }
+            //del
+            $result = RolePermission::delInfoWhere(['role_id' => $role_id, 'permission_id' => $permission_id]);
             if (!$result) {
                 return self::$RESPONSE->result(5005);
             }
@@ -419,8 +421,13 @@ class Auth extends Controller
         $permissions = [];
         foreach ($all_permissions as $permission) {
             $permission['isset'] = 0;
+            if(!isset($permissions[$permission['controller']]['all']) || $permissions[$permission['controller']]['all'] == 1) {
+                $permissions[$permission['controller']]['all'] = 1;
+            }
             if (in_array($permission['id'], $role_permission_ids)) {
                 $permission['isset'] = 1;
+            }else{
+                $permissions[$permission['controller']]['all'] = 0;
             }
 
             $permissions[$permission['controller']][] = $permission;
