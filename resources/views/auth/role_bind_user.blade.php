@@ -22,7 +22,8 @@
                         <td>{{$user['user_id']}}</td>
                         <td>{{$user['role_id']}}</td>
                         <td>
-                            <button class="uk-button uk-button-danger uk-button-small" type="button">删除用户</button>
+                            <button data-v={"role_id":{{$user['role_id']}},"user_id":{{$user['user_id']}}}
+                                    class="uk-button uk-button-danger uk-button-small delete" type="button">删除用户</button>
                         </td>
                     </tr>
                 @endforeach
@@ -33,6 +34,8 @@
     </div>
 
     <script>
-
+        $(function () {
+            jinono.delete.init('确定删除绑定用户！','{{url('Auth.roleBindUser')}}',{'command':'del'});
+        })
     </script>
 @stop

@@ -316,11 +316,13 @@ class Auth extends Controller
             $user_id = self::$REQUEST->input('user_id');
             $command = self::$REQUEST->input('command');
             if ($command == 'add') {
-                UserRole::add(['role_id' => $role_id, 'user_id' => $user_id]);
+                $result = UserRole::add(['role_id' => $role_id, 'user_id' => $user_id]);
             } elseif ($command == 'del') {
-                UserRole::delInfoWhere(['role_id' => $role_id, 'user_id' => $user_id]);
+                $result = UserRole::delInfoWhere(['role_id' => $role_id, 'user_id' => $user_id]);
             }
-
+            if (!$result) {
+                return self::$RESPONSE->result(5005);
+            }
             return self::$RESPONSE->result(0);
         }
 

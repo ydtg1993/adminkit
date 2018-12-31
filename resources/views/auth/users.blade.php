@@ -40,7 +40,7 @@
                             </div>
                         </td>
                         <td>
-                            <button class="uk-button uk-button-danger uk-button-small" type="button">删除用户</button>
+                            <button data-v={"id":{{$user['id']}}} class="uk-button uk-button-danger uk-button-small delete" type="button">删除用户</button>
                         </td>
                     </tr>
                 @endforeach
@@ -79,13 +79,15 @@
     </div>
     <script>
         $(function () {
-            jinono.auto_input_update.init('{{url('Auth.operateUser')}}');
-            jinono.input_update.init('{{url('Auth.operateUser')}}', {}, function () {
+            var url = '{{url('Auth.operateUser')}}';
+            jinono.auto_input_update.init(url);
+            jinono.input_update.init(url, {}, function () {
                 $('.uk-select').change(function () {
                     var role_id = $(this).find("option:selected").val();
                     jinono.input_update.data['role_id'] = role_id;
                 });
             });
+            jinono.delete.init('确定删除用户！',url,{'command':'del'});
         });
     </script>
 

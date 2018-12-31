@@ -251,20 +251,20 @@
             url: '',
             flag: false,
             data: {},
-            init:function (url, data,callback) {
+            init:function (warn,url, data,callback) {
                 jinono.delete.url = url;
                 data = typeof data == 'object' ? data : {};
                 callback = typeof callback == 'function' ? callback : function () {
                 };
-                jinono.delete.data = data;
                 callback();
 
                 UIkit.util.on('.delete', 'click', function (e) {
                     e.preventDefault();
                     e.target.blur();
-                    var id = e.target.getAttribute("data-id");
-                    UIkit.modal.confirm('UIkit confirm!').then(function () {
-                        jinono.delete.data["id"] = id;
+                    var data_v = JSON.parse(e.target.getAttribute("data-v"));
+                    jinono.delete.data = Object.assign(data,data_v);
+                    console.log(jinono.delete.data)
+                    UIkit.modal.confirm(warn).then(function () {
                         jinono.delete.apply();
                     }, function () {
                         jinono.delete.data = {};
