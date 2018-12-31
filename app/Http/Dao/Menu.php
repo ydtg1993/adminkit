@@ -22,16 +22,16 @@ class Menu
     public static function getList($auth_permission_ids)
     {
         $routes = [];
-        foreach (app()->routes->getRoutes() as $k=>$value){
-            if($value->methods[0] == 'GET'){
+        foreach (app()->routes->getRoutes() as $k => $value) {
+            if ($value->methods[0] == 'GET') {
                 $action = $value->getAction();
-                if(!isset($action['controller'])){
+                if (!isset($action['controller'])) {
                     continue;
                 }
 
                 $routes[] = [
-                    'controller'=>basename($action['controller']),
-                    'uri'=>$value->uri
+                    'controller' => basename($action['controller']),
+                    'uri' => $value->uri
                 ];
             }
         }
@@ -39,31 +39,34 @@ class Menu
         $permissions = Permissions::getAllInIds(['view' => 1, 'access' => 0], $auth_permission_ids, 'sort');
 
         $p_navs = [];
-        foreach ($permissions as $k=>$permission) {
+        foreach ($permissions as $k => $permission) {
             if ($permission['p_id'] == 0) {
                 $nav_info = [
-                    'id'=>$permission['id'],
-                    'name'=>$permission['name'],
-                    'navs'=>[]
+                    'id' => $permission['id'],
+                    'name' => $permission['name'] ? $permission['name'] : $permission['controller'],
+                    'navs' => []
                 ];
                 $p_navs[] = $nav_info;
                 unset($permissions[$k]);
             }
         }
 
-        foreach ($p_navs as &$p_nav){
+        foreach ($p_navs as &$p_nav) {
             $p_id = $p_nav['id'];
-            foreach ($permissions as &$permission){
-                if($permission['p_id'] != $p_id){
+            foreach ($permissions as &$permission) {
+                if ($permission['p_id'] != $p_id) {
                     continue;
                 }
 
-                $ac = $permission['controller'].'@'.$permission['action'];
-                $route = Func::getQuery2Array($routes,['controller'=>$ac]);
-                if(empty($route)){
-                    throw new \Exception('没有配置路由:'.$ac);
+                $ac = $permission['controller'] . '@' . $permission['action'];
+                $route = Func::getQuery2Array($routes, ['controller' => $ac]);
+                if (empty($route)) {
+                    throw new \Exception('没有配置路由:' . $ac);
                 }
                 $permission['link'] = $route['uri'];
+                if(!$permission['name']){
+                    $permission['name'] = $permission['action'];
+                }
                 $p_nav['navs'][] = $permission;
             }
         }
