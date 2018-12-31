@@ -55,8 +55,7 @@
 
     <script>
         $(function () {
-            var url = '{{url('Auth.upMenu')}}';
-           jinono.auto_input_update.init(url);
+           jinono.auto_input_update.init('{{url('Auth.upMenu')}}');
         });
     </script>
 @stop

@@ -37,8 +37,7 @@
 
     <script>
         $(function () {
-            var url = '{{url('Auth.permission')}}';
-           jinono.auto_radio_select.init(url,{role_id:'{{$role['id']}}'});
+           jinono.auto_radio_select.init('{{url('Auth.permission')}}',{role_id:'{{$role['id']}}'});
         });
     </script>
 @stop

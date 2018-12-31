@@ -25,7 +25,7 @@
                         <td>
                             <button data-href="{{url('Auth.roleBindUser/'.$role['id'])}}" class="uk-button uk-button-default uk-button-small redirect_button" type="button">绑定用户</button>
                             <button data-href="{{url('Auth.permission/'.$role['id'])}}" class="uk-button uk-button-default uk-button-small redirect_button" type="button">权限设置</button>
-                            <button class="uk-button uk-button-danger uk-button-small" type="button">删除角色</button>
+                            <button data-id="{{$role['id']}}" class="uk-button uk-button-danger uk-button-small delete" type="button">删除角色</button>
                         </td>
                     </tr>
                 @endforeach
@@ -50,6 +50,7 @@
         $(function () {
             jinono.auto_input_update.init('{{url('Auth.operateRole')}}');
             jinono.input_update.init('{{url('Auth.operateRole')}}');
+            jinono.delete.init('{{url('Auth.operateRole')}}',{'command':'del'});
         });
     </script>
 @stop

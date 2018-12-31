@@ -7,9 +7,6 @@
         now_time: function () {
             return (Date.parse(new Date()) / 1000);
         },
-        prompt: function () {
-
-        },
         redirect:{
             init:function () {
                 $('.redirect_button').click(jinono.redirect.apply);
@@ -242,6 +239,46 @@
                 jinono.input_update.flag = true;
                 jinono.requestEvent.apply(jinono.input_update.url, jinono.input_update.data, 'POST', function (d) {
                     jinono.input_update.flag = false;
+                    if (d.code == 0) {
+                        window.location.reload();
+                        return;
+                    }
+                    UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
+                });
+            }
+        },
+        delete:{
+            url: '',
+            flag: false,
+            data: {},
+            init:function (url, data,callback) {
+                jinono.delete.url = url;
+                data = typeof data == 'object' ? data : {};
+                callback = typeof callback == 'function' ? callback : function () {
+                };
+                jinono.delete.data = data;
+                callback();
+
+                UIkit.util.on('.delete', 'click', function (e) {
+                    e.preventDefault();
+                    e.target.blur();
+                    var id = e.target.getAttribute("data-id");
+                    UIkit.modal.confirm('UIkit confirm!').then(function () {
+                        jinono.delete.data["id"] = id;
+                        jinono.delete.apply();
+                    }, function () {
+                        jinono.delete.data = {};
+                    });
+                });
+            },
+            apply:function () {
+                if (jinono.delete.flag) {
+                    return;
+                }
+                jinono.delete.flag = true;
+
+                jinono.requestEvent.apply(jinono.delete.url, jinono.delete.data, 'POST', function (d) {
+                    jinono.delete.flag = false;
                     if (d.code == 0) {
                         window.location.reload();
                         return;
