@@ -55,7 +55,7 @@
     <script>
         $(function () {
            jinono.auto_radio_select.init('{{url('Auth.permission')}}',{role_id:'{{$role['id']}}'});
-           jinono.auto_check.init('{{url('Auth.permission')}}',{role_id:'{{$role['id']}}','notify':true});
+           jinono.auto_check.init('{{url('Auth.permission')}}',{role_id:'{{$role['id']}}'});
         });
     </script>
 @stop
