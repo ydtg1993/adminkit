@@ -234,7 +234,7 @@ class Auth extends Controller
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }
-                $result = UserRole::delInfoWhere(['user_id'=>$user_id]);
+                $result = UserRole::delInfoWhere(['user_id' => $user_id]);
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }
@@ -292,8 +292,8 @@ class Auth extends Controller
                     return self::$RESPONSE->result(5001);
                 }
                 $id = Roles::add([
-                    'name'=>self::$REQUEST->input('name'),
-                    'description'=>self::$REQUEST->input('description')
+                    'name' => self::$REQUEST->input('name'),
+                    'description' => self::$REQUEST->input('description')
                 ]);
                 if (!$id) {
                     return self::$RESPONSE->result(5005);
@@ -310,7 +310,7 @@ class Auth extends Controller
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }
-                $result = RolePermission::delInfoWhere(['role_id'=>$id]);
+                $result = RolePermission::delInfoWhere(['role_id' => $id]);
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }
@@ -318,14 +318,14 @@ class Auth extends Controller
             }
 
             $data = [];
-            if(self::$REQUEST->has('name')){
+            if (self::$REQUEST->has('name')) {
                 $data['name'] = self::$REQUEST->input('name');
             }
-            if(self::$REQUEST->has('description')){
+            if (self::$REQUEST->has('description')) {
                 $data['description'] = self::$REQUEST->input('description');
             }
 
-            Roles::upInfoWhere($data,['id'=>$id]);
+            Roles::upInfoWhere($data, ['id' => $id]);
             return self::$RESPONSE->result(0);
         }
     }
@@ -348,7 +348,7 @@ class Auth extends Controller
         }
 
         $role_id = self::$REQUEST->route('role_id');
-        $role = Roles::getInfoWhere(['id'=>$role_id]);
+        $role = Roles::getInfoWhere(['id' => $role_id]);
         $users = UserRole::getAllWithUser(['role_id' => $role_id]);
 
         self::$data['role'] = $role;
@@ -363,19 +363,51 @@ class Auth extends Controller
             $permission_id = self::$REQUEST->input('id');
             $select = self::$REQUEST->input('select');
 
-            $result = false;
+            $p_nav = Permissions::getInfoWhere(['id' => $permission_id, 'p_id' => 0], ['id']);
+            $add_permissions_data = [];
+            $del_permissions_data = [];
+            if ($p_nav) {
+                $all_permissions = RolePermission::getAllPermissionToRole($role_id, $p_nav['id']);
+                $add_permissions_data[] = ['role_id' => (int)$role_id, 'permission_id' => $p_nav['id']];
+                $del_permissions_data[] = ['role_id' => (int)$role_id, 'permission_id' => $p_nav['id']];
+                foreach ($all_permissions as $permission) {
+                    if ($permission['role_id'] != $role_id) {
+                        $add_permissions_data[] = [
+                            'role_id' => (int)$role_id,
+                            'permission_id' => $permission['id']
+                        ];
+                    } elseif ($permission['role_id'] == $role_id) {
+                        $del_permissions_data[] = [
+                            'role_id' => (int)$role_id,
+                            'permission_id' => $permission['permission_id']
+                        ];
+                    }
+                }
+            }
+            //add
             if ($select == 1) {
-                $result = RolePermission::add(['role_id' => $role_id, 'permission_id' => $permission_id]);
-            } elseif ($select == 0) {
+                if ($add_permissions_data) {
+                    $result = RolePermission::batchAdd($add_permissions_data);
+                }else{
+                    $result = RolePermission::add(['role_id' => $role_id, 'permission_id' => $permission_id]);
+                }
+                if (!$result) {
+                    return self::$RESPONSE->result(5005);
+                }
+                return self::$RESPONSE->result(0);
+            }
+            //del
+            if ($del_permissions_data) {
+                $result = RolePermission::batchDel($del_permissions_data);
+            } else {
                 $result = RolePermission::delInfoWhere(['role_id' => $role_id, 'permission_id' => $permission_id]);
             }
-
             if (!$result) {
                 return self::$RESPONSE->result(5005);
             }
-
             return self::$RESPONSE->result(0);
         }
+
         $role_id = self::$REQUEST->route('role_id');
         self::$data['role'] = Roles::getInfoWhere(['id' => $role_id]);
 
@@ -390,6 +422,7 @@ class Auth extends Controller
             if (in_array($permission['id'], $role_permission_ids)) {
                 $permission['isset'] = 1;
             }
+
             $permissions[$permission['controller']][] = $permission;
         }
 

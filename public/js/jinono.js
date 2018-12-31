@@ -29,6 +29,9 @@
                     data: data,
                     success: function (d) {
                         callback(d);
+                    },
+                    error:function (d) {
+                        callback(d);
                     }
                 });
             }

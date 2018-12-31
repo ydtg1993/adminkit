@@ -10,6 +10,7 @@ namespace App\Http\Model;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class BaseModel extends Model
 {
@@ -92,5 +93,16 @@ class BaseModel extends Model
         return self::where($where)->delete();
     }
 
-
+    public static function batchDel(array $where)
+    {
+        $sql = '';
+        foreach ($where as $w){
+            $builder = self::where($w);
+            $bindings = $builder->getBindings();
+            $str = str_replace('?', '%s', $builder->toSql());
+            $sql.= sprintf($str, ...$bindings).';';
+        }
+        $sql = str_replace('select *','delete',$sql);
+        return DB::unprepared($sql);
+    }
 }
