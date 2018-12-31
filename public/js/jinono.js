@@ -232,6 +232,38 @@
                 });
             }
         },
+        auto_check: {
+            url: '',
+            flag: false,
+            data: {},
+            init: function (url, data) {
+                jinono.auto_check.url = url;
+                data = typeof data == 'object' ? data : {};
+                jinono.auto_check.data = data;
+                $('.auto_check input').click(jinono.auto_check.apply);
+            },
+            apply: function () {
+                if (jinono.auto_check.flag) {
+                    return;
+                }
+                jinono.auto_check.flag = true;
+
+                var data_v = JSON.parse($(this).attr("data-v"));
+                jinono.auto_check.data = Object.assign(jinono.auto_check.data,data_v);
+                jinono.auto_check.data[$(this).attr("data-k")] = 0;
+                if($(this).prop("checked")) {
+                    jinono.auto_check.data[$(this).attr("data-k")] = 1;
+                }
+
+                jinono.requestEvent.apply(jinono.auto_check.url, jinono.auto_check.data, 'POST', function (d) {
+                    jinono.auto_check.flag = false;
+                    if (d.code == 0) {
+                        return;
+                    }
+                    UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
+                });
+            }
+        },
         input_update: {
             url: '',
             is_up: false,

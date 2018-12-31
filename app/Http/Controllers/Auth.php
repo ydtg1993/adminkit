@@ -163,7 +163,7 @@ class Auth extends Controller
                 $data['sort'] = self::$REQUEST->input('sort');
             }
             if (self::$REQUEST->has('view')) {
-                $data['view'] = (int)(boolean)self::$REQUEST->input('view');
+                $data['view'] = (int)self::$REQUEST->input('view');
             }
             Permissions::upInfoWhere($data, ['id' => $id]);
 
@@ -231,6 +231,10 @@ class Auth extends Controller
             //del
             if ($command == 'del') {
                 $result = User::delInfoWhere(['id' => $user_id]);
+                if (!$result) {
+                    return self::$RESPONSE->result(5005);
+                }
+                $result = UserRole::delInfoWhere(['user_id'=>$user_id]);
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }
@@ -303,6 +307,10 @@ class Auth extends Controller
             //del
             if ($command == 'del') {
                 $result = Roles::delInfoWhere(['id' => $id]);
+                if (!$result) {
+                    return self::$RESPONSE->result(5005);
+                }
+                $result = RolePermission::delInfoWhere(['role_id'=>$id]);
                 if (!$result) {
                     return self::$RESPONSE->result(5005);
                 }

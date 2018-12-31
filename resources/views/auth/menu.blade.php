@@ -16,31 +16,31 @@
                     <th>控制器</th>
                     <th>方法</th>
                     <th>菜单名</th>
-                    <th>可见</th>
                     <th>排序</th>
+                    <th>可见</th>
                     <th>描述</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($data as $d)
-                    <tr class="auto_input_update">
+                    <tr>
                         <td>{{$d['id']}}</td>
                         <td>{{$d['p_id']}}</td>
                         <td>{{$d['controller']}}</td>
                         <td>{{$d['action']}}</td>
                         <td style="width: 120px">
-                            <div class="uk-margin">
+                            <div class="uk-margin auto_input_update">
                                 <input data-v={"id":{{$d['id']}}} name="name" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['name']}}" />
                             </div>
                         </td>
                         <td style="width: 120px">
-                            <div class="uk-margin">
-                                <input data-v={"id":{{$d['id']}}} name="view" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['view']}}" />
+                            <div class="uk-margin auto_input_update">
+                                <input data-v={"id":{{$d['id']}}} name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
                             </div>
                         </td>
-                        <td style="width: 120px">
-                            <div class="uk-margin">
-                                <input data-v={"id":{{$d['id']}}} name="sort" style="width: 120px" class="uk-input uk-form-width-medium uk-form-small" value="{{$d['sort']}}" />
+                        <td>
+                            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid auto_check">
+                                <label><input data-v={"id":{{$d['id']}}} data-k="view" name="view" class="uk-checkbox" type="checkbox" @if($d['view'] == 1)checked="checked"@endif></label>
                             </div>
                         </td>
                         <td>{{$d['description']}}</td>
@@ -56,6 +56,7 @@
     <script>
         $(function () {
            jinono.auto_input_update.init('{{url('Auth.upMenu')}}');
+           jinono.auto_check.init('{{url('Auth.upMenu')}}');
         });
     </script>
 @stop
