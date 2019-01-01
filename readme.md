@@ -2,11 +2,8 @@
 
       laravel和Uikit开发的后台管理系统模型 自带完整oauth授权管理模块 开箱即可完成一个基本的后台管理
    
-<p align="left">
-  ![laravel](https://img.shields.io/badge/laravel-view-green.svg)
-  <a href="https://getuikit.com/"><img width="60px" src="https://github.com/ydtg1993/admin/blob/master/public/img/uikit.PNG"></a> 
-  <b>技术支持</b>
-</p>
+![laravel](https://img.shields.io/badge/laravel-https%3A%2F%2Flaravel.com%2F-red.svg)
+![UIkit](https://img.shields.io/badge/UIkit-https%3A%2F%2Fgetuikit.com%2F-blue.svg)
 
 ## 安装
 1. 克隆 [admin](https://github.com/ydtg1993/admin.git)
