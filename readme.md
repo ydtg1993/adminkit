@@ -1,4 +1,6 @@
 <h3 align="center">后台管理系统模型</h3>
+
+      laravel和Uikit开发的后台管理系统模型 自带完整oauth授权管理模块
    
 <p align="left">
   <a href="https://laravel.com/"><img width="120px" src="https://laravel.com/assets/img/components/logo-laravel.svg"></a>
