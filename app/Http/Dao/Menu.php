@@ -61,7 +61,7 @@ class Menu
                 $ac = $permission['controller'] . '@' . $permission['action'];
                 $route = Func::getQuery2Array($routes, ['controller' => $ac]);
                 if (empty($route)) {
-                    throw new \Exception('没有配置路由:' . $ac);
+                    throw new \Exception('导航菜单没有设置路由:' . $ac);
                 }
                 $permission['link'] = $route['uri'];
                 if(!$permission['name']){

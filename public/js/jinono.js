@@ -74,6 +74,30 @@
                 });
             }
         },
+        logout:{
+            url: '',
+            redirect: '',
+            sub_flag: false,
+            init:function (url, redirect) {
+                jinono.logout.url = url;
+                jinono.logout.redirect = redirect;
+                $('#logout').click(jinono.logout.submit_event);
+            },
+            submit_event: function () {
+                if (jinono.login.sub_flag) {
+                    return;
+                }
+                jinono.logout.sub_flag = true;
+
+                jinono.requestEvent.apply(jinono.logout.url, {}, 'POST', function (d) {
+                    jinono.logout.sub_flag = false;
+                    if (d.code == 0) {
+                        window.location.href = jinono.logout.redirect;
+                        return;
+                    }
+                });
+            }
+        },
         navigation: {
             dom: null,
             but: null,

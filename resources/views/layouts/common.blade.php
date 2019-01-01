@@ -23,6 +23,7 @@
         $(function () {
             jinono.navigation.init();
             jinono.redirect.init();
+            jinono.logout.init('{{url('logout')}}','{{url('login')}}');
         })
     </script>
 </head>
@@ -44,7 +45,7 @@
             <div class="uk-navbar-right">
                 <div class="uk-navbar-item uk-visible@m">
                     <ul class="uk-navbar-nav uk-visible@m">
-                        <li><p uk-margin><a class="uk-button uk-button-default" href="javascript:void(0);" style="color:#ffffff">登出</a></p></li>
+                        <li><p uk-margin><a class="uk-button uk-button-default" id="logout" href="javascript:void(0);" style="color:#ffffff">登出</a></p></li>
                     </ul>
                 </div>
         </nav>

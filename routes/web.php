@@ -12,6 +12,7 @@
 */
 
 $router->match(['get','post'],'/login', 'Auth@login');
+$router->post('logout', 'Auth@logout');
 
 $router->group(['middleware' => 'CheckAdminLogin'], function () use ($router) {
     $router->get('/', 'Home@index');

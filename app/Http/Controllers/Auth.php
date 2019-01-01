@@ -42,6 +42,14 @@ class Auth extends Controller
         return view('auth/login');
     }
 
+    public function logout()
+    {
+        if (self::$REQUEST->ajax()) {
+            UserActive::destroy();
+            return self::$RESPONSE->result(0);
+        }
+    }
+
     public function menu()
     {
         $path = PROJECT_ROOT_PATH . DIRECTORY_SEPARATOR . str_replace("\\", "/", __NAMESPACE__) . '/*';
@@ -154,13 +162,13 @@ class Auth extends Controller
 
             $data = [];
             if (self::$REQUEST->has('name')) {
-                $data['name'] = self::$REQUEST->input('name');
+                $data['name'] = (string)self::$REQUEST->input('name');
             }
             if (self::$REQUEST->has('description')) {
-                $data['description'] = self::$REQUEST->input('description');
+                $data['description'] = (string)self::$REQUEST->input('description');
             }
             if (self::$REQUEST->has('sort')) {
-                $data['sort'] = self::$REQUEST->input('sort');
+                $data['sort'] = (int)self::$REQUEST->input('sort');
             }
             if (self::$REQUEST->has('view')) {
                 $data['view'] = (int)self::$REQUEST->input('view');
@@ -261,7 +269,7 @@ class Auth extends Controller
                 $data['account'] = self::$REQUEST->input('account');
             }
             if (self::$REQUEST->has('password')) {
-                $token = User::getInfoWhere(['id' => $user_id], ['token']);
+                $token = User::getInfoWhere(['id' => $user_id], ['token'])['token'];
                 $data['password'] = Func::packPassword(self::$REQUEST->input('password'), $token);
             }
             $result = User::upInfoWhere($data, ['id' => $user_id]);
