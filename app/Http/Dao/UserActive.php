@@ -23,7 +23,7 @@ class UserActive
      */
     public static function restore($user_info)
     {
-        User::upInfoInWhere(['last_login_time'=>NOW_DATE]);
+        User::upInfoWhere(['last_login_time'=>NOW_DATE]);
         return session(['administrator'=>json_encode($user_info)]);
     }
 
