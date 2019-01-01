@@ -9,7 +9,7 @@
 ## 安装
 1. 克隆 [admin](https://github.com/ydtg1993/admin.git)
 2. 使用 composer update
-3. 创建本地数据库 运行database文件夹下的admin.sql 
+3. 创建mysql数据库 导入项目database目录的admin.sql 
 
    `默认账号: admin 密码: 123456`
    
