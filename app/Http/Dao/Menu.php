@@ -10,7 +10,6 @@ namespace App\Http\Dao;
 
 use App\Http\Model\Permissions;
 use App\Libs\Helper\Func;
-use Symfony\Component\Console\Helper\Helper;
 
 /**
  * 后台导航菜单
@@ -61,6 +60,7 @@ class Menu
                 $ac = $permission['controller'] . '@' . $permission['action'];
                 $route = Func::getQuery2Array($routes, ['controller' => $ac]);
                 if (empty($route)) {
+                    Permissions::upInfoWhere(['view'=>0],['controller'=>$permission['controller'],'action'=>$permission['action']]);
                     throw new \Exception('导航菜单没有设置路由:' . $ac);
                 }
                 $permission['link'] = $route['uri'];

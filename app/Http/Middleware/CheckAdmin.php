@@ -35,7 +35,7 @@ class CheckAdmin
             if($request->ajax()){
                 return ResponseCode::getInstance()->result(4100);
             }
-            die('没有授权管理角色');
+            return response()->view('error', ['message'=>config('code')[4100],'code'=>4100]);
         }
 
         $request_info = $request->route()->getAction();;
@@ -54,13 +54,13 @@ class CheckAdmin
                 if($request->ajax()){
                     return ResponseCode::getInstance()->result(4101);
                 }
-                die('没有权限');
+                return response()->view('error', ['message'=>config('code')[4101],'code'=>4101]);
             }
         }else{
             if($request->ajax()){
                 return ResponseCode::getInstance()->result(4102);
             }
-            die('需要超级管理员开通');
+            return response()->view('error', ['message'=>config('code')[4102],'code'=>4102]);
         }
 
         Controller::$data['head'] = $permission['name'];
