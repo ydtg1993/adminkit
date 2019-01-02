@@ -1,4 +1,4 @@
-<h3 align="center">后台管理系统模型</h3>
+<h3 align="center">后台管理系统雏形</h3>
 
       laravel和Uikit开发的后台管理系统模型 自带完整oauth授权管理模块 开箱即可完成一个基本的后台管理
    
