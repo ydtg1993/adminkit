@@ -78,6 +78,12 @@
     </a>
 </div>
 
+{{--<div id="tool">
+    <a href="javascript:void(0);" style="color: white;position: relative;top:8px;left: 8px">
+        <span uk-icon="icon: plus; ratio: 1.8" style=""></span>
+    </a>
+</div>--}}
+
 <div class="uk-container uk-position-relative" id="container">
     <h2 class="uk-heading-line" style="margin: 10px auto"><span>{{$head}}</span></h2>
 @yield('content')
