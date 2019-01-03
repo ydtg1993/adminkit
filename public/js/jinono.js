@@ -48,6 +48,8 @@
                 $('#login #submit').click(jinono.login.submit_event);
             },
             change_event: function () {
+                $('#login .account_message').text('');
+                $('#login .password_message').text('');
                 var name = $(this).prop('name');
                 var val = $(this).val();
                 jinono.login.data[name] = val;
@@ -70,7 +72,13 @@
                         window.location.href = jinono.login.redirect;
                         return;
                     }
-                    $('#login .password_message').text('密码错误');
+
+                    if(d.code == 4001){
+                        $('#login .account_message').text('账户不存在');
+                    }
+                    if(d.code == 4002){
+                        $('#login .password_message').text('密码错误');
+                    }
                 });
             }
         },

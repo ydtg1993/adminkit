@@ -29,14 +29,16 @@ class Auth extends Controller
             $password = self::$REQUEST->input('password');
 
             $user = User::getInfoWhere(['account' => $account]);
-            if ($user) {
-                $pass = Func::packPassword($password, $user['token']);
-                if ($user['password'] != $pass) {
-                    return self::$RESPONSE->result(4001);
-                }
-                UserActive::restore($user);
-                return self::$RESPONSE->result(0);
+            if (!$user) {
+                return self::$RESPONSE->result(4001);
             }
+
+            $pass = Func::packPassword($password, $user['token']);
+            if ($user['password'] != $pass) {
+                return self::$RESPONSE->result(4002);
+            }
+            UserActive::restore($user);
+            return self::$RESPONSE->result(0);
         }
 
         return view('auth/login');
