@@ -32,7 +32,10 @@
                 </h2>
                 <ol>
                     <li>
-                        <p>请star并关注 <a href="https://github.com/ydtg1993/admin.git">admin</a> 提出您的意见 :-)</p>
+                        <p>请star并关注 <a href="https://github.com/ydtg1993/admin.git">admin</a> 提出您宝贵的意见 :-)</p>
+                    </li>
+                    <li>
+                        <p>打开导航菜单栏程序会自动获取controller目录下的类文件方法 根据所需配置路由添加菜单栏选项</p>
                     </li>
                     <li>
                         <p>信息输入框的内容均采用blur离焦事件自动保存修改 (增添信息输入框需点击 "保存信息" 手动提交)</p>
