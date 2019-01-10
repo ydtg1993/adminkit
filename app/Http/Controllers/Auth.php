@@ -22,9 +22,13 @@ use App\Libs\Helper\Func;
  */
 class Auth extends Controller
 {
+    /**
+     * 登陆
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
     public function login()
     {
-        if (self::$REQUEST->method() == 'POST') {
+        if (self::$REQUEST->ajax()) {
             $account = self::$REQUEST->input('account');
             $password = self::$REQUEST->input('password');
 
@@ -44,6 +48,10 @@ class Auth extends Controller
         return view('auth/login');
     }
 
+    /**
+     * 登出
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout()
     {
         if (self::$REQUEST->ajax()) {
@@ -52,6 +60,10 @@ class Auth extends Controller
         }
     }
 
+    /**
+     * 导航菜单
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function menu()
     {
         $path = PROJECT_ROOT_PATH . DIRECTORY_SEPARATOR . str_replace("\\", "/", __NAMESPACE__) . '/*';
@@ -125,6 +137,12 @@ class Auth extends Controller
         return view('auth/menu', self::$data);
     }
 
+    /**
+     * 自动添加菜单
+     * @param $class_name
+     * @param $method_name
+     * @return array
+     */
     private function addMenu($class_name, $method_name)
     {
         $data = [
@@ -157,6 +175,10 @@ class Auth extends Controller
         return $data;
     }
 
+    /**
+     * 修改菜单 接口
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function upMenu()
     {
         if (self::$REQUEST->ajax()) {
@@ -181,6 +203,10 @@ class Auth extends Controller
         }
     }
 
+    /**
+     * 用户列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function userList()
     {
         $users = UserModel::getAllWithRoleWhere();
@@ -200,6 +226,10 @@ class Auth extends Controller
         return view('auth/users', self::$data);
     }
 
+    /**
+     * 操作用户 接口
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function operateUser()
     {
         if (self::$REQUEST->ajax()) {
@@ -282,6 +312,10 @@ class Auth extends Controller
         }
     }
 
+    /**
+     * 角色列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function role()
     {
         $roles = RolesModel::getAllWhere();
@@ -290,6 +324,10 @@ class Auth extends Controller
         return view('auth/roles', self::$data);
     }
 
+    /**
+     * 操作角色 接口
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function operateRole()
     {
         if (self::$REQUEST->ajax()) {
@@ -340,6 +378,10 @@ class Auth extends Controller
         }
     }
 
+    /**
+     * 角色绑定用户
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
     public function roleBindUser()
     {
         if (self::$REQUEST->ajax()) {
@@ -368,6 +410,10 @@ class Auth extends Controller
         return view('auth/role_bind_user', self::$data);
     }
 
+    /**
+     * 权限
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
     public function permission()
     {
         if (self::$REQUEST->ajax()) {
