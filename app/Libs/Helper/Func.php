@@ -15,10 +15,10 @@ class Func
      * @param $date
      * @return string
      */
-    static function hourglassTime($date)
+    public static function hourglassTime($date)
     {
         $time = strtotime($date);
-        $differ = TIME - $time;
+        $differ = time() - $time;
         if ($differ < 60) {
             return $differ . ' 秒前';
         } elseif ($differ < 3600) {
@@ -39,20 +39,6 @@ class Func
         }
         $year = floor($differ / (86400 * 365));
         return $year . ' 年前';
-    }
-
-    static function separateNum($num, $total = 10)
-    {
-        return (int)($num % $total);
-    }
-
-    static function arrayToString(array $array)
-    {
-        $string = '';
-        foreach ($array as $k => $v) {
-            $string .= "$k=$v";
-        }
-        return $string;
     }
 
     /**
@@ -111,7 +97,7 @@ class Func
      * @param array $params
      * @return bool|int|string
      */
-    static function multiQuery2ArrayIndex($array, array $params)
+    public static function multiQuery2ArrayIndex($array, array $params)
     {
         $index = false;
         foreach ($array as $key=>$item) {
@@ -136,7 +122,7 @@ class Func
      * @param array $keys
      * @return array
      */
-    static function group2Array($array,array $keys)
+    public static function group2Array($array,array $keys)
     {
         $data = [];
         foreach ($array as $item){
@@ -156,7 +142,7 @@ class Func
      * @param $value
      * @return array
      */
-    static function keysQueryByValue($array, $value)
+    public static function keysQueryByValue($array, $value)
     {
         $keys = [];
         foreach ($array as $k => $v) {
@@ -168,7 +154,7 @@ class Func
         return $keys;
     }
 
-    static function createToken()
+    public static function createToken()
     {
         $str = uniqid(mt_rand(),1).microtime();
         return sha1($str);
@@ -179,7 +165,7 @@ class Func
      * @param $token
      * @return string
      */
-    static function packPassword($password,$token)
+    public static function packPassword($password,$token)
     {
         return md5($password.DIRECTORY_SEPARATOR.$token);
     }
@@ -193,7 +179,7 @@ class Func
      * @param string $cacert
      * @return int|mixed|string
      */
-    static function curlRequest($url, $vars = array(), $method = 'POST', $timeout = 10, $CA = false, $cacert = '')
+    public static function curlRequest($url, $vars = array(), $method = 'POST', $timeout = 10, $CA = false, $cacert = '')
     {
         $method = strtoupper($method);
         $SSL = substr($url, 0, 8) == "https://" ? true : false;
