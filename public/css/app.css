@@ -63,6 +63,31 @@
     display: none;
 }
 
+.category_minus{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #1e87f0;
+    border-radius:10px 0 0 10px;
+}
+
+.category_plus{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #1e87f0;
+    border-radius:0 10px 10px 0;
+}
+.category_minus:hover,.category_plus:hover{
+    background-color: #0f7ae5;
+}
+.category_minus>span,.category_plus>span{
+    color: white;
+    margin-top: 10px;
+}
+
 #tool{
     z-index: 999;
     position: fixed;
