@@ -350,6 +350,8 @@ class Auth extends Controller
                 $result = UserRoleModel::add(['role_id' => $role_id, 'user_id' => $user_id]);
             } elseif ($command == 'del') {
                 $result = UserRoleModel::delInfoWhere(['role_id' => $role_id, 'user_id' => $user_id]);
+            }else{
+                return self::$RESPONSE->result(5005);
             }
             if (!$result) {
                 return self::$RESPONSE->result(5005);
