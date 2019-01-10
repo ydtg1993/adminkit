@@ -124,9 +124,8 @@
                 var navigation = localStorage.getItem("navigation");
                 if (navigation == 1) {
                     jinono.navigation.dom.css('display', 'block');
-                    jinono.navigation.dom.removeClass('uk-animation-reverse').addClass('uk-animation-slide-left-medium');
-                    localStorage.setItem("navigation", 1);
                 } else {
+                    jinono.navigation.but.css('display', 'block');
                     jinono.navigation.dom.css('display', 'none');
                 }
             },
@@ -155,8 +154,7 @@
                         jinono.navigation.but.css('display', 'none');
                     } else {
                         jinono.navigation.dom.css('display', 'none');
-                        jinono.navigation.but.css('display', 'block');
-                        jinono.navigation.but.addClass('uk-animation-fade');
+                        jinono.navigation.but.css('display', 'block').addClass('uk-animation-fade');
                     }
                 });
             }
