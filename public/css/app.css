@@ -85,7 +85,8 @@
 }
 .category_minus>span,.category_plus>span{
     color: white;
-    margin-top: 10px;
+    margin-top: 13px;
+    margin-left: 3px;
 }
 
 #tool{

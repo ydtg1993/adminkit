@@ -37,7 +37,7 @@ class Auth extends Controller
                 return self::$RESPONSE->result(4001);
             }
 
-            $pass = Func::packPassword($password, $user['token']);
+            $pass = packPassword($password, $user['token']);
             if ($user['password'] != $pass) {
                 return self::$RESPONSE->result(4002);
             }
@@ -103,7 +103,7 @@ class Auth extends Controller
                     continue;
                 }
 
-                $permission_info_index = Func::multiQuery2ArrayIndex($permission_infos, ['controller' => $class_name, 'action' => $method_name]);
+                $permission_info_index = multiQuery2ArrayIndex($permission_infos, ['controller' => $class_name, 'action' => $method_name]);
                 if (is_int($permission_info_index)) {
                     $permission_info = $permission_infos[$permission_info_index];
                     $permission_infos[$permission_info_index]['exists'] = true;
@@ -119,7 +119,7 @@ class Auth extends Controller
             if (empty($list[$class_name])) {
                 continue;
             }
-            $p_data = Func::getQuery2Array($permission_infos, ['controller' => $class_name, 'p_id' => 0]);
+            $p_data = getQuery2Array($permission_infos, ['controller' => $class_name, 'p_id' => 0]);
             if (empty($p_data)) {
                 $p_data = PermissionsModel::getInfoWhere(['controller' => $class_name, 'p_id' => 0]);
             }
@@ -214,7 +214,7 @@ class Auth extends Controller
 
         foreach ($users as &$user) {
             $user['role_name'] = '';
-            $result = Func::getQuery2Array($roles, ['id' => $user['role_id']]);
+            $result = getQuery2Array($roles, ['id' => $user['role_id']]);
             if (!$result) {
                 continue;
             }
@@ -234,7 +234,7 @@ class Auth extends Controller
     {
         if (self::$REQUEST->ajax()) {
             $data = [];
-            $token = Func::createToken();
+            $token = createToken();
             if (!self::$REQUEST->has('id')) {
                 //add
                 if (!self::$REQUEST->has('name')) {
@@ -251,7 +251,7 @@ class Auth extends Controller
                     'name' => self::$REQUEST->input('name'),
                     'account' => self::$REQUEST->input('account'),
                     'token' => $token,
-                    'password' => Func::packPassword(self::$REQUEST->input('password'), $token)
+                    'password' => packPassword(self::$REQUEST->input('password'), $token)
                 ]);
                 if (!$user_id) {
                     return self::$RESPONSE->result(5005);
@@ -302,7 +302,7 @@ class Auth extends Controller
             }
             if (self::$REQUEST->has('password')) {
                 $token = UserModel::getInfoWhere(['id' => $user_id], ['token'])['token'];
-                $data['password'] = Func::packPassword(self::$REQUEST->input('password'), $token);
+                $data['password'] = packPassword(self::$REQUEST->input('password'), $token);
             }
             $result = UserModel::upInfoWhere($data, ['id' => $user_id]);
             if (!$result) {
