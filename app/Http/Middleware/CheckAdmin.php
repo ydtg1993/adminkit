@@ -6,9 +6,9 @@ use App\Http\Common\ResponseCode;
 use App\Http\Controllers\Controller;
 use App\Http\Dao\Menu;
 use App\Http\Dao\UserActive;
-use App\Http\Model\Permissions;
-use App\Http\Model\RolePermission;
-use App\Http\Model\UserRole;
+use App\Http\Model\PermissionsModel;
+use App\Http\Model\RolePermissionModel;
+use App\Http\Model\UserRoleModel;
 use Closure;
 use Illuminate\Support\Facades\Redirect;
 
@@ -30,7 +30,7 @@ class CheckAdmin
         Controller::$data['user_info'] = $user_info;
 
         //权限检查
-        $user_role = UserRole::getInfoWhere(['user_id'=>$user_info['id']]);
+        $user_role = UserRoleModel::getInfoWhere(['user_id'=>$user_info['id']]);
         if(!$user_role){
             if($request->ajax()){
                 return ResponseCode::getInstance()->result(4100);
@@ -44,9 +44,9 @@ class CheckAdmin
         $slug_info = explode('@',$slug);
         $controller = $slug_info[0];
         $action = $slug_info[1];
-        $permission = Permissions::getInfoWhere(['controller'=>$controller,'action'=>$action]);
+        $permission = PermissionsModel::getInfoWhere(['controller'=>$controller,'action'=>$action]);
 
-        $auths = RolePermission::getAllWhere(['role_id'=>$user_role['role_id']]);
+        $auths = RolePermissionModel::getAllWhere(['role_id'=>$user_role['role_id']]);
         $auth_permission_ids = array_column($auths,'permission_id');
 
         if($permission){

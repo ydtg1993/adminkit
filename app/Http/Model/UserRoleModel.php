@@ -9,7 +9,7 @@
 namespace App\Http\Model;
 
 
-class UserRole extends BaseModel
+class UserRoleModel extends BaseModel
 {
     protected $table = 'user_role';
 

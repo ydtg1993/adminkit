@@ -8,12 +8,8 @@
 
 namespace App\Http\Dao;
 
-
-use App\Http\Common\RedisDriver;
-use App\Http\Model\User;
-use App\Libs\Helper\Func;
+use App\Http\Model\UserModel;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cookie;
 
 class UserActive
 {
@@ -24,7 +20,7 @@ class UserActive
      */
     public static function restore($user_info)
     {
-        User::upInfoWhere(['last_login_time'=>Carbon::today()->toDateString()]);
+        UserModel::upInfoWhere(['last_login_time'=>Carbon::today()->toDateString()]);
         return session(['administrator'=>json_encode($user_info)]);
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Common\ResponseCode;
-use App\Http\Dao\UserActive;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 

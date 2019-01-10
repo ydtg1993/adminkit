@@ -8,10 +8,6 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Dao\UserActive;
-use Illuminate\Support\Facades\Redirect;
-
 class Home extends Controller
 {
     public function index()

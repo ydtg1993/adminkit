@@ -8,7 +8,7 @@
 
 namespace App\Http\Dao;
 
-use App\Http\Model\Permissions;
+use App\Http\Model\PermissionsModel;
 use App\Libs\Helper\Func;
 
 /**
@@ -35,7 +35,7 @@ class Menu
             }
         }
 
-        $permissions = Permissions::getAllInIds(['view' => 1, 'access' => 0], $auth_permission_ids, 'sort');
+        $permissions = PermissionsModel::getAllInIds(['view' => 1, 'access' => 0], $auth_permission_ids, 'sort');
 
         $p_navs = [];
         foreach ($permissions as $k => $permission) {
@@ -60,7 +60,7 @@ class Menu
                 $ac = $permission['controller'] . '@' . $permission['action'];
                 $route = Func::getQuery2Array($routes, ['controller' => $ac]);
                 if (empty($route)) {
-                    Permissions::upInfoWhere(['view'=>0],['controller'=>$permission['controller'],'action'=>$permission['action']]);
+                    PermissionsModel::upInfoWhere(['view'=>0],['controller'=>$permission['controller'],'action'=>$permission['action']]);
                     throw new \Exception('导航菜单没有设置路由:' . $ac);
                 }
                 $permission['link'] = $route['uri'];
