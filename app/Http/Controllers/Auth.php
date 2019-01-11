@@ -14,7 +14,6 @@ use App\Http\Model\RolePermissionModel;
 use App\Http\Model\RolesModel;
 use App\Http\Model\UserModel;
 use App\Http\Model\UserRoleModel;
-use App\Libs\Helper\Func;
 
 /**
  * Class Auth
@@ -23,8 +22,9 @@ use App\Libs\Helper\Func;
 class Auth extends Controller
 {
     /**
-     * 登陆
+     * 登录
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function login()
     {
@@ -51,6 +51,7 @@ class Auth extends Controller
     /**
      * 登出
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function logout()
     {
@@ -63,6 +64,7 @@ class Auth extends Controller
     /**
      * 导航菜单
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \ReflectionException
      */
     public function menu()
     {

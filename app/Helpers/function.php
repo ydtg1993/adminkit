@@ -42,7 +42,7 @@ function hourglassTime($date)
  * @param array $params
  * @return array
  */
-function getQuery2Array($array, array $params)
+function getQuery2Array(array $array, array $params)
 {
     foreach ($array as $item) {
         $flag = true;
@@ -66,7 +66,7 @@ function getQuery2Array($array, array $params)
  * @param array $params
  * @return array
  */
-function multiQuery2Array($array, array $params)
+function multiQuery2Array(array $array, array $params)
 {
     $data = [];
     foreach ($array as $item) {
@@ -91,7 +91,7 @@ function multiQuery2Array($array, array $params)
  * @param array $params
  * @return bool|int|string
  */
-function multiQuery2ArrayIndex($array, array $params)
+function multiQuery2ArrayIndex(array $array, array $params)
 {
     $index = false;
     foreach ($array as $key=>$item) {
@@ -116,7 +116,7 @@ function multiQuery2ArrayIndex($array, array $params)
  * @param array $keys
  * @return array
  */
-function group2Array($array,array $keys)
+function group2Array(array $array,array $keys)
 {
     $data = [];
     foreach ($array as $item){
@@ -136,7 +136,7 @@ function group2Array($array,array $keys)
  * @param $value
  * @return array
  */
-function keysQueryByValue($array, $value)
+function keysQueryByValue(array $array, $value)
 {
     $keys = [];
     foreach ($array as $k => $v) {
@@ -146,6 +146,37 @@ function keysQueryByValue($array, $value)
     }
 
     return $keys;
+}
+
+/**
+ * @param string $id
+ * @param string $p_id
+ * @param array $array
+ * @param array $tree
+ */
+function makeTree($id,$p_id,&$array,&$tree = [])
+{
+    if(empty($array)){
+        return;
+    }
+
+    if(empty($tree)){
+        $item = array_shift($array);
+        $tree[$item[$id]] = [];
+    }
+
+    foreach ($tree as $branch=>&$leaves){
+        foreach ($array as $key=>$value){
+            if($value[$p_id] == $branch){
+                $leaves[$value[$id]] = [];
+                unset($array[$key]);
+            }
+        }
+
+        if(!empty($leaves) && $array){
+            makeTree($id,$p_id,$array,$leaves);
+        }
+    }
 }
 
 function createToken()

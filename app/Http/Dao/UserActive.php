@@ -40,7 +40,6 @@ class UserActive
     }
 
     /**
-     * @return bool
      * @throws \Exception
      */
     public static function destroy()

@@ -9,7 +9,6 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\PermissionsModel;
-use App\Libs\Helper\Func;
 
 /**
  * 后台导航菜单
@@ -18,6 +17,11 @@ use App\Libs\Helper\Func;
  */
 class Menu
 {
+    /**
+     * @param $auth_permission_ids
+     * @return array
+     * @throws \Exception
+     */
     public static function getList($auth_permission_ids)
     {
         $routes = [];
