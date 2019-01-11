@@ -13,14 +13,4 @@ class CategoryModel extends BaseModel
 {
     protected $table = 'category';
 
-    public static function getCategoryTree()
-    {
-        $list = self::getAllWhere([],'p_id');
-        makeTree('id','p_id',$list,$tree);
-
-        return ['list'=>$list,'tree'=>$tree];
-    }
-
-
-
 }
