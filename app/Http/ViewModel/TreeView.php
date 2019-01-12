@@ -14,27 +14,63 @@ class TreeView
     private $tree_view;
 
     private $root = <<<EOF
-<ul class="uk-list">%s</ul>
+<ul class="uk-list treeView uk-animation-toggle">%s</ul>
 EOF;
 
     private $branch = <<<EOF
 <ul class="uk-list" style="border-left:1px solid #c6c6c6;margin-left: 1em">%s</ul>
 EOF;
 
-    private $leaves = <<<EOF
+    private $leaf = <<<EOF
 <li>
-    <div>
+    <div data-v=%s>
     <div style="border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px"></div>
-         <a href="javascript:void(0);" class="category_minus">
+         <a href="javascript:void(0);" class="tree_retract" data-sign="1">
              <span style="position: relative;" uk-icon="icon: minus-circle; ratio: 0.7"></span></a>
-             <button class="uk-button uk-button-default" style="padding: 0 10px;float: left"><div style="width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">%s<div></button>
-         <a href="javascript:void(0);" class="category_plus">
+             <button class="uk-button uk-button-default" style="height:40px;padding: 0 10px;float: left">
+                <div style="width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">%s<div>
+             </button>
+         <a href="javascript:void(0);" class="tree_grow">
              <span style="position: relative;" uk-icon="icon: info; ratio: 0.7"></span></a>
          <div class="clear_both"></div>
     </div>
     %s
 </li>
 EOF;
+
+    private $leaf_apex = <<<EOF
+<li>
+    <div data-v=%s>
+    <div style="border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px"></div>
+         <a href="javascript:void(0);" class="tree_ban">
+             <span style="position: relative;" uk-icon="icon: ban; ratio: 0.7"></span></a>
+             <button class="uk-button uk-button-default" style="height:40px;padding: 0 10px;float: left">
+                <div style="width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">%s<div>
+             </button>
+         <a href="javascript:void(0);" class="tree_grow">
+             <span style="position: relative;" uk-icon="icon: info; ratio: 0.7"></span></a>
+         <div class="clear_both"></div>
+    </div>
+    %s
+</li>
+EOF;
+
+    private $form = <<<EOF
+<div id="modal-overflow" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Headline</h2>
+        </div>
+        <div class="uk-modal-body">
+        </div>
+        <div class="uk-modal-footer uk-text-right"> 
+            <button class="uk-button uk-button-danger" type="button">删除</button>
+        </div>
+    </div>
+</div>
+EOF;
+
 
     public function index($data)
     {
@@ -59,10 +95,10 @@ EOF;
             $tree[$item[$id]] = [];
             if(empty($array)){
                 //无子节点
-                $this->tree_view = sprintf($this->root,$item['name']);
+                $this->tree_view = sprintf($this->root,sprintf($this->leaf_apex,arrayToJsonString($item),$item['name'],''));
                 return;
             }else{
-                $this->tree_view = sprintf($this->root,sprintf($this->leaves,$item['name'],$this->branch));
+                $this->tree_view = sprintf($this->root,sprintf($this->leaf,arrayToJsonString($item),$item['name'],$this->branch));
             }
         }
 
@@ -72,7 +108,7 @@ EOF;
                 if($value[$p_id] == $branch){
                     $leaves[$value[$id]] = [];
                     unset($array[$key]);
-                    if(self::multiQuery2ArrayIndex($array,[$p_id=>$value[$id]]) === false){
+                    if(multiQuery2ArrayIndex($array,[$p_id=>$value[$id]]) === false){
                         //无子节点
                         $shoot[] = $this->makeBranch($value,false);
                     }else{
@@ -82,12 +118,12 @@ EOF;
             }
 
             if(!empty($leaves) && $array){
-                $this->tree_view = self::firstSprintf($this->tree_view,join('',$shoot));
+                $this->tree_view = firstSprintf($this->tree_view,join('',$shoot));
                 $this->makeTree($id,$p_id,$array,$leaves);
             }elseif (empty($leaves)){
                 return;
             }else{
-                $this->tree_view = self::firstSprintf($this->tree_view,join('',$shoot));
+                $this->tree_view = firstSprintf($this->tree_view,join('',$shoot));
             }
         }
     }
@@ -101,50 +137,8 @@ EOF;
     private function makeBranch($data,$node = true)
     {
         if($node){
-            return sprintf($this->leaves,$data['name'],$this->branch);
+            return sprintf($this->leaf,arrayToJsonString($data),$data['name'],$this->branch);
         }
-        return sprintf($this->leaves,$data['name'],'');
-    }
-
-    /**
-     * 首位sprintf
-     * @param $string
-     * @param string $aim
-     * @param $value
-     * @return bool|string
-     */
-    private static function firstSprintf($string,$value,$aim = '%s')
-    {
-        $position = strpos($string,$aim);
-        $len = strlen($aim);
-        $left = substr($string,0,$position + $len);
-        $right = substr($string,$position + $len);
-        return sprintf($left,$value).$right;
-    }
-
-    /**
-     * 多条件查询二维数组索引
-     *
-     * @param $array
-     * @param array $params
-     * @return bool|int|string
-     */
-    private static function multiQuery2ArrayIndex(array $array, array $params)
-    {
-        $index = false;
-        foreach ($array as $key=>$item) {
-            $add = true;
-            foreach ($params as $field => $value) {
-                if ($item[$field] != $value) {
-                    $add = false;
-                }
-            }
-            if ($add) {
-                $index = $key;
-                break;
-            }
-        }
-
-        return $index;
+        return sprintf($this->leaf_apex,arrayToJsonString($data),$data['name'],'');
     }
 }

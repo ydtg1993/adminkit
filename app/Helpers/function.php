@@ -6,10 +6,11 @@
  * Time: 2:25
  */
 /**
+ * 时间断面
  * @param $date
  * @return string
  */
-function hourglassTime($date)
+function timeSection($date)
 {
     $time = strtotime($date);
     $differ = time() - $time;
@@ -60,7 +61,7 @@ function getQuery2Array(array $array, array $params)
 }
 
 /**
- * 多条件查询二维数组
+ * 多条件查询二维数组 返回二维数组结构
  *
  * @param $array
  * @param array $params
@@ -149,12 +150,18 @@ function keysQueryByValue(array $array, $value)
 }
 
 /**
+ *  $array = [
+ *  ["id"=>1,"p_id"=>2,"name"=>"中国"],
+ *  ["id"=>2,"p_id"=>1,"name"=>"四川"],
+ *  ["id"=>3,"p_id"=>1,"name"=>"北京"],
+ *  ["id"=>4,"p_id"=>2,"name"=>"成都"]];
+ * 二维数组转树形结构
  * @param string $id
  * @param string $p_id
  * @param array $array
  * @param array $tree
  */
-function makeTree($id,$p_id,&$array,&$tree = [])
+function arrayToTree($id,$p_id,&$array,&$tree = [])
 {
     if(empty($array)){
         return;
@@ -174,9 +181,94 @@ function makeTree($id,$p_id,&$array,&$tree = [])
         }
 
         if(!empty($leaves) && $array){
-            makeTree($id,$p_id,$array,$leaves);
+            arrayToTree($id,$p_id,$array,$leaves);
         }
     }
+}
+
+/**
+ * 数组转json字符串(文本形式) 支持多维度
+ * @param array $array
+ * @return string
+ */
+function arrayToJsonString(array $array)
+{
+    $json = '';
+    $is_object = true;
+    foreach ($array as $name=>$value){
+        if(arrayFirstKey($array) == $name && is_int($name)){
+            $json.='[';
+            $is_object = false;
+
+            if(!is_array($value)){
+                $json.="\"$value\",";
+                continue;
+            }
+            $json.= arrayToJsonString($value).",";
+            continue;
+        }elseif (arrayFirstKey($array) == $name){
+            $json.='{';
+
+            if(!is_array($value)){
+                $json.="$name:\"$value\",";
+                continue;
+            }
+            $json.= arrayToJsonString($value).",";
+            continue;
+        }
+
+        if(arrayEndKey($array) == $name && $is_object){
+            if(!is_array($value)){
+                $json.="$name:\"$value\"}";
+                continue;
+            }
+            $json.= arrayToJsonString($value)."}";
+            break;
+        }elseif (arrayEndKey($array) == $name){
+            if(!is_array($value)){
+                $json.="$name:\"$value\"]";
+                continue;
+            }
+            $json.= arrayToJsonString($value)."]";
+            break;
+        }
+
+        if($is_object){
+            if(!is_array($value)){
+                $json.="$name:\"$value\",";
+                continue;
+            }
+            $json.= arrayToJsonString($value).",";
+            continue;
+        }
+        if(!is_array($value)){
+            $json.="\"$value\",";
+            continue;
+        }
+        $json.= arrayToJsonString($value).",";
+    }
+
+    return $json;
+}
+
+/**
+ * @param array $array
+ * @return int|null|string
+ */
+function arrayFirstKey(array $array)
+{
+    reset($array);
+    return key($array);
+}
+
+/**
+ * @param array $array
+ * @return int|null|string
+ */
+function arrayEndKey(array $array)
+{
+    end($array);
+    return key($array);
 }
 
 function createToken()
@@ -193,6 +285,22 @@ function createToken()
 function packPassword($password,$token)
 {
     return md5($password.DIRECTORY_SEPARATOR.$token);
+}
+
+/**
+ * 首位sprintf
+ * @param $string
+ * @param string $aim
+ * @param $value
+ * @return bool|string
+ */
+function firstSprintf($string,$value,$aim = '%s')
+{
+    $position = strpos($string,$aim);
+    $len = strlen($aim);
+    $left = substr($string,0,$position + $len);
+    $right = substr($string,$position + $len);
+    return sprintf($left,$value).$right;
 }
 
 /**

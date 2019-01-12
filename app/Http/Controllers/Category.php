@@ -23,6 +23,11 @@ class Category extends Controller
         $data = CategoryModel::getAllWhere([],'p_id');
         self::$data['tree_view'] = (new TreeView())->index($data);
 
-        return view('category/inde',self::$data);
+        return view('category/index',self::$data);
+    }
+
+    public function operate()
+    {
+
     }
 }

@@ -384,6 +384,33 @@
                     UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
                 });
             }
+        },
+        tree_view:{
+            init:function () {
+                $('.treeView buttun').click(jinono.tree_view.upForm);
+                $('.treeView .tree_retract').click(jinono.tree_view.retract);
+            },
+            addForm:function () {
+                
+            },
+            upForm:function () {
+                
+            },
+            delete:function () {
+                
+            },
+            retract:function () {
+                var sign = $(this).attr('data-sign');
+                if(sign == 1){
+                    $(this).find('span').attr('uk-icon','icon: plus-circle; ratio: 0.7');
+                    $(this).parent().siblings().css('display','none');
+                    $(this).attr('data-sign','0');
+                    return;
+                }
+                $(this).find('span').attr('uk-icon','icon: minus-circle; ratio: 0.7');
+                $(this).parent().siblings().css('display','block');
+                $(this).attr('data-sign','1');
+            }
         }
     };
 
