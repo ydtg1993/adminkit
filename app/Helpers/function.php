@@ -242,7 +242,7 @@ function arrayToJsonString(array $array)
             $json .= '{';
 
             if (!is_array($value)) {
-                $json .= "$name:\"$value\",";
+                $json .= "\"$name\":\"$value\",";
                 continue;
             }
             $json .= arrayToJsonString($value) . ",";
@@ -251,14 +251,14 @@ function arrayToJsonString(array $array)
 
         if (arrayEndKey($array) == $name && $is_object) {
             if (!is_array($value)) {
-                $json .= "$name:\"$value\"}";
+                $json .= "\"$name\":\"$value\"}";
                 continue;
             }
             $json .= arrayToJsonString($value) . "}";
             break;
         } elseif (arrayEndKey($array) == $name) {
             if (!is_array($value)) {
-                $json .= "$name:\"$value\"]";
+                $json .= "\"$name\":\"$value\"]";
                 continue;
             }
             $json .= arrayToJsonString($value) . "]";
@@ -267,7 +267,7 @@ function arrayToJsonString(array $array)
 
         if ($is_object) {
             if (!is_array($value)) {
-                $json .= "$name:\"$value\",";
+                $json .= "\"$name\":\"$value\",";
                 continue;
             }
             $json .= arrayToJsonString($value) . ",";

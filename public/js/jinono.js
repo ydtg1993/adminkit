@@ -387,14 +387,27 @@
         },
         tree_view:{
             init:function () {
-                $('.treeView buttun').click(jinono.tree_view.upForm);
+                $('.treeView .tree_grow').click(jinono.tree_view.addForm);
+                $('.treeView .uk-button').click(jinono.tree_view.upForm);
                 $('.treeView .tree_retract').click(jinono.tree_view.retract);
             },
             addForm:function () {
-                
+                var json_str = $(this).parent().attr('data-v');
+                var data = JSON.parse(json_str);
+                for (var key in data){
+                    $('input[name="'+key+'"]').placeholder = key;
+                }
+                $('#form h2').text("添加子节点");
+                $('#form .uk-button-danger').css('visibility','hidden');
             },
             upForm:function () {
-                
+                var json_str = $(this).parent().attr('data-v');
+                var data = JSON.parse(json_str);
+                for (var key in data){
+                    $('input[name="'+key+'"]').val(data[key]);
+                }
+                $('#form h2').text("修改子节点");
+                $('#form .uk-button-danger').css('visibility','visible');
             },
             delete:function () {
                 

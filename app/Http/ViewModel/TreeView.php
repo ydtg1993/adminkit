@@ -13,27 +13,27 @@ class TreeView
 {
     private $tree_view;
 
-    private $element = ["name","value","sort"];
+    private $elements = ["name","value","sort"];
 
     private $root = <<<EOF
 <ul class="uk-list treeView uk-animation-toggle">%s</ul>
 EOF;
 
     private $branch = <<<EOF
-<ul class="uk-list" style="border-left:1px solid #c6c6c6;margin-left: 1em">%s</ul>
+<ul class="uk-list branch">%s</ul>
 EOF;
 
     private $leaf = <<<EOF
 <li>
     <div data-v=%s>
-    <div style="border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px"></div>
+         <div class="line"></div>
          <a href="javascript:void(0);" class="tree_retract" data-sign="1">
              <span style="position: relative;" uk-icon="icon: minus-circle; ratio: 0.7"></span></a>
-             <button class="uk-button uk-button-default" style="height:40px;padding: 0 10px;float: left">
-                <div style="width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">%s<div>
+             <button class="uk-button uk-button-default" href="#form" uk-toggle>
+                <div class="text">%s<div>
              </button>
-         <a href="javascript:void(0);" class="tree_grow">
-             <span style="position: relative;" uk-icon="icon: info; ratio: 0.7"></span></a>
+         <a href="#form" class="tree_grow" uk-toggle>
+             <span uk-icon="icon: info; ratio: 0.7"></span></a>
          <div class="clear_both"></div>
     </div>
     %s
@@ -43,13 +43,13 @@ EOF;
     private $leaf_apex = <<<EOF
 <li>
     <div data-v=%s>
-    <div style="border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px"></div>
+         <div class="line"></div>
          <a href="javascript:void(0);" class="tree_ban">
-             <span style="position: relative;" uk-icon="icon: ban; ratio: 0.7"></span></a>
-             <button class="uk-button uk-button-default" style="height:40px;padding: 0 10px;float: left" href="#modal-overflow" uk-toggle>
-                <div style="width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">%s<div>
+             <span uk-icon="icon: ban; ratio: 0.7"></span></a>
+             <button class="uk-button uk-button-default" href="#form" uk-toggle>
+                <div class="text">%s<div>
              </button>
-         <a href="javascript:void(0);" class="tree_grow">
+         <a href="#form" class="tree_grow" uk-toggle>
              <span style="position: relative;" uk-icon="icon: info; ratio: 0.7"></span></a>
          <div class="clear_both"></div>
     </div>
@@ -58,7 +58,7 @@ EOF;
 EOF;
 
     private $form = <<<EOF
-<div id="modal-overflow" uk-modal>
+<div id="form" uk-modal>
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
@@ -69,21 +69,35 @@ EOF;
         </div>
         <div class="uk-modal-footer uk-text-right"> 
             <button class="uk-button uk-button-danger" type="button">删除</button>
+            <button class="uk-button uk-button-primary" type="button">保存</button>
         </div>
     </div>
 </div>
 EOF;
 
+    private $input = <<<EOF
+<div class="uk-margin">
+     <input class="uk-input" type="text" placeholder="%s" name="%s" value="">
+</div>
+EOF;
+
+
 
     public function index($data)
     {
         $this->makeTree('id','p_id',$data,$tree);
+        $this->tree_view = $this->tree_view.$this->makeForm();
         return $this->tree_view;
     }
 
     private function makeForm()
     {
+        $inputs = '';
+        foreach ($this->elements as $element){
+            $inputs.= sprintf($this->input,$element,$element);
+        }
 
+        return sprintf($this->form,$inputs);
     }
 
     /**

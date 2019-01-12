@@ -64,6 +64,26 @@
 }
 
 /*树状图*/
+.treeView .branch{
+    border-left:1px solid #c6c6c6;margin-left: 1em;
+}
+
+.treeView .line{
+    border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px;
+}
+
+.treeView button{
+    height:40px;padding: 0 10px;float: left;
+}
+
+.treeView span{
+    position: relative;
+}
+
+.treeView .text{
+    width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+}
+
 .tree_retract{
     float: left;
     display: block;
