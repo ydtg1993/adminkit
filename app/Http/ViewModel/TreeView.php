@@ -13,6 +13,8 @@ class TreeView
 {
     private $tree_view;
 
+    private $element = ["name","value","sort"];
+
     private $root = <<<EOF
 <ul class="uk-list treeView uk-animation-toggle">%s</ul>
 EOF;
@@ -44,7 +46,7 @@ EOF;
     <div style="border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px"></div>
          <a href="javascript:void(0);" class="tree_ban">
              <span style="position: relative;" uk-icon="icon: ban; ratio: 0.7"></span></a>
-             <button class="uk-button uk-button-default" style="height:40px;padding: 0 10px;float: left">
+             <button class="uk-button uk-button-default" style="height:40px;padding: 0 10px;float: left" href="#modal-overflow" uk-toggle>
                 <div style="width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">%s<div>
              </button>
          <a href="javascript:void(0);" class="tree_grow">
@@ -63,6 +65,7 @@ EOF;
             <h2 class="uk-modal-title">Headline</h2>
         </div>
         <div class="uk-modal-body">
+            %s
         </div>
         <div class="uk-modal-footer uk-text-right"> 
             <button class="uk-button uk-button-danger" type="button">删除</button>
@@ -76,6 +79,11 @@ EOF;
     {
         $this->makeTree('id','p_id',$data,$tree);
         return $this->tree_view;
+    }
+
+    private function makeForm()
+    {
+
     }
 
     /**
@@ -108,7 +116,7 @@ EOF;
                 if($value[$p_id] == $branch){
                     $leaves[$value[$id]] = [];
                     unset($array[$key]);
-                    if(multiQuery2ArrayIndex($array,[$p_id=>$value[$id]]) === false){
+                    if(quadraticArrayGetIndex($array,[$p_id=>$value[$id]]) === false){
                         //无子节点
                         $shoot[] = $this->makeBranch($value,false);
                     }else{

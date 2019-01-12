@@ -28,7 +28,7 @@ function timeSection($date)
     } elseif ($differ < (86400 * 30)) {
         $week = floor($differ / (86400 * 7));
         return $week . ' 周前';
-    } elseif ($differ < (86400 * 365)){
+    } elseif ($differ < (86400 * 365)) {
         $months = floor($differ / (86400 * 30));
         return $months . ' 月前';
     }
@@ -43,7 +43,7 @@ function timeSection($date)
  * @param array $params
  * @return array
  */
-function getQuery2Array(array $array, array $params)
+function quadraticArrayQuery(array $array, array $params)
 {
     foreach ($array as $item) {
         $flag = true;
@@ -67,7 +67,7 @@ function getQuery2Array(array $array, array $params)
  * @param array $params
  * @return array
  */
-function multiQuery2Array(array $array, array $params)
+function quadraticArrayQueryAll(array $array, array $params)
 {
     $data = [];
     foreach ($array as $item) {
@@ -92,10 +92,10 @@ function multiQuery2Array(array $array, array $params)
  * @param array $params
  * @return bool|int|string
  */
-function multiQuery2ArrayIndex(array $array, array $params)
+function quadraticArrayGetIndex(array $array, array $params)
 {
     $index = false;
-    foreach ($array as $key=>$item) {
+    foreach ($array as $key => $item) {
         $add = true;
         foreach ($params as $field => $value) {
             if ($item[$field] != $value) {
@@ -117,13 +117,13 @@ function multiQuery2ArrayIndex(array $array, array $params)
  * @param array $keys
  * @return array
  */
-function group2Array(array $array,array $keys)
+function quadraticArrayGroup(array $array, array $keys)
 {
     $data = [];
-    foreach ($array as $item){
+    foreach ($array as $item) {
         $group_key = '';
-        foreach ($keys as $key){
-            $group_key.= $item[$key].'|';
+        foreach ($keys as $key) {
+            $group_key .= $item[$key] . '|';
         }
 
         $data[$group_key][] = $item;
@@ -150,6 +150,38 @@ function keysQueryByValue(array $array, $value)
 }
 
 /**
+ * 二维度数组排序
+ * @param $array
+ * @param $field
+ * @param int $order
+ * @return array
+ */
+function quadraticArraySort(array $array, $field, $order = SORT_ASC)
+{
+    $new_array = array();
+    $sortable_array = array();
+
+    foreach ($array as $k => $v) {
+
+    }
+
+    switch ($order) {
+        case SORT_ASC:
+            asort($sortable_array);
+            break;
+        case SORT_DESC:
+            arsort($sortable_array);
+            break;
+    }
+
+    foreach ($sortable_array as $k => $v) {
+        $new_array[] = $array[$k];
+    }
+
+    return $new_array;
+}
+
+/**
  *  $array = [
  *  ["id"=>1,"p_id"=>2,"name"=>"中国"],
  *  ["id"=>2,"p_id"=>1,"name"=>"四川"],
@@ -161,27 +193,27 @@ function keysQueryByValue(array $array, $value)
  * @param array $array
  * @param array $tree
  */
-function arrayToTree($id,$p_id,&$array,&$tree = [])
+function quadraticArrayToTree($id, $p_id, &$array, &$tree = [])
 {
-    if(empty($array)){
+    if (empty($array)) {
         return;
     }
 
-    if(empty($tree)){
+    if (empty($tree)) {
         $item = array_shift($array);
         $tree[$item[$id]] = [];
     }
 
-    foreach ($tree as $branch=>&$leaves){
-        foreach ($array as $key=>$value){
-            if($value[$p_id] == $branch){
+    foreach ($tree as $branch => &$leaves) {
+        foreach ($array as $key => $value) {
+            if ($value[$p_id] == $branch) {
                 $leaves[$value[$id]] = [];
                 unset($array[$key]);
             }
         }
 
-        if(!empty($leaves) && $array){
-            arrayToTree($id,$p_id,$array,$leaves);
+        if (!empty($leaves) && $array) {
+            quadraticArrayToTree($id, $p_id, $array, $leaves);
         }
     }
 }
@@ -195,57 +227,57 @@ function arrayToJsonString(array $array)
 {
     $json = '';
     $is_object = true;
-    foreach ($array as $name=>$value){
-        if(arrayFirstKey($array) == $name && is_int($name)){
-            $json.='[';
+    foreach ($array as $name => $value) {
+        if (arrayFirstKey($array) == $name && is_int($name)) {
+            $json .= '[';
             $is_object = false;
 
-            if(!is_array($value)){
-                $json.="\"$value\",";
+            if (!is_array($value)) {
+                $json .= "\"$value\",";
                 continue;
             }
-            $json.= arrayToJsonString($value).",";
+            $json .= arrayToJsonString($value) . ",";
             continue;
-        }elseif (arrayFirstKey($array) == $name){
-            $json.='{';
+        } elseif (arrayFirstKey($array) == $name) {
+            $json .= '{';
 
-            if(!is_array($value)){
-                $json.="$name:\"$value\",";
+            if (!is_array($value)) {
+                $json .= "$name:\"$value\",";
                 continue;
             }
-            $json.= arrayToJsonString($value).",";
+            $json .= arrayToJsonString($value) . ",";
             continue;
         }
 
-        if(arrayEndKey($array) == $name && $is_object){
-            if(!is_array($value)){
-                $json.="$name:\"$value\"}";
+        if (arrayEndKey($array) == $name && $is_object) {
+            if (!is_array($value)) {
+                $json .= "$name:\"$value\"}";
                 continue;
             }
-            $json.= arrayToJsonString($value)."}";
+            $json .= arrayToJsonString($value) . "}";
             break;
-        }elseif (arrayEndKey($array) == $name){
-            if(!is_array($value)){
-                $json.="$name:\"$value\"]";
+        } elseif (arrayEndKey($array) == $name) {
+            if (!is_array($value)) {
+                $json .= "$name:\"$value\"]";
                 continue;
             }
-            $json.= arrayToJsonString($value)."]";
+            $json .= arrayToJsonString($value) . "]";
             break;
         }
 
-        if($is_object){
-            if(!is_array($value)){
-                $json.="$name:\"$value\",";
+        if ($is_object) {
+            if (!is_array($value)) {
+                $json .= "$name:\"$value\",";
                 continue;
             }
-            $json.= arrayToJsonString($value).",";
+            $json .= arrayToJsonString($value) . ",";
             continue;
         }
-        if(!is_array($value)){
-            $json.="\"$value\",";
+        if (!is_array($value)) {
+            $json .= "\"$value\",";
             continue;
         }
-        $json.= arrayToJsonString($value).",";
+        $json .= arrayToJsonString($value) . ",";
     }
 
     return $json;
@@ -273,7 +305,7 @@ function arrayEndKey(array $array)
 
 function createToken()
 {
-    $str = uniqid(mt_rand(),1).microtime();
+    $str = uniqid(mt_rand(), 1) . microtime();
     return sha1($str);
 }
 
@@ -282,9 +314,9 @@ function createToken()
  * @param $token
  * @return string
  */
-function packPassword($password,$token)
+function packPassword($password, $token)
 {
-    return md5($password.DIRECTORY_SEPARATOR.$token);
+    return md5($password . DIRECTORY_SEPARATOR . $token);
 }
 
 /**
@@ -294,13 +326,13 @@ function packPassword($password,$token)
  * @param $value
  * @return bool|string
  */
-function firstSprintf($string,$value,$aim = '%s')
+function firstSprintf($string, $value, $aim = '%s')
 {
-    $position = strpos($string,$aim);
+    $position = strpos($string, $aim);
     $len = strlen($aim);
-    $left = substr($string,0,$position + $len);
-    $right = substr($string,$position + $len);
-    return sprintf($left,$value).$right;
+    $left = substr($string, 0, $position + $len);
+    $right = substr($string, $position + $len);
+    return sprintf($left, $value) . $right;
 }
 
 /**

@@ -105,7 +105,7 @@ class Auth extends Controller
                     continue;
                 }
 
-                $permission_info_index = multiQuery2ArrayIndex($permission_infos, ['controller' => $class_name, 'action' => $method_name]);
+                $permission_info_index = quadraticArrayGetIndex($permission_infos, ['controller' => $class_name, 'action' => $method_name]);
                 if (is_int($permission_info_index)) {
                     $permission_info = $permission_infos[$permission_info_index];
                     $permission_infos[$permission_info_index]['exists'] = true;
@@ -121,7 +121,7 @@ class Auth extends Controller
             if (empty($list[$class_name])) {
                 continue;
             }
-            $p_data = getQuery2Array($permission_infos, ['controller' => $class_name, 'p_id' => 0]);
+            $p_data = quadraticArrayQuery($permission_infos, ['controller' => $class_name, 'p_id' => 0]);
             if (empty($p_data)) {
                 $p_data = PermissionsModel::getInfoWhere(['controller' => $class_name, 'p_id' => 0]);
             }
@@ -216,7 +216,7 @@ class Auth extends Controller
 
         foreach ($users as &$user) {
             $user['role_name'] = '';
-            $result = getQuery2Array($roles, ['id' => $user['role_id']]);
+            $result = quadraticArrayQuery($roles, ['id' => $user['role_id']]);
             if (!$result) {
                 continue;
             }

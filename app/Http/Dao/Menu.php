@@ -62,7 +62,7 @@ class Menu
                 }
 
                 $ac = $permission['controller'] . '@' . $permission['action'];
-                $route = getQuery2Array($routes, ['controller' => $ac]);
+                $route = quadraticArrayQuery($routes, ['controller' => $ac]);
                 if (empty($route)) {
                     PermissionsModel::upInfoWhere(['view'=>0],['controller'=>$permission['controller'],'action'=>$permission['action']]);
                     throw new \Exception('导航菜单没有设置路由:' . $ac);
