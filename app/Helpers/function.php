@@ -162,7 +162,7 @@ function quadraticArraySort(array $array, $field, $order = SORT_ASC)
     $sortable_array = array();
 
     foreach ($array as $k => $v) {
-
+        //TODO
     }
 
     switch ($order) {
