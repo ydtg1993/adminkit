@@ -159,23 +159,22 @@ function keysQueryByValue(array $array, $value)
 function quadraticArraySort(array $array, $field, $order = SORT_ASC)
 {
     $new_array = array();
-    $sortable_array = array();
 
     foreach ($array as $k => $v) {
-        //TODO
+        if(isset($new_array[$v[$field]])){
+            $new_array[$v[$field] + 1] = $v;
+            continue;
+        }
+        $new_array[$v[$field]] = $v;
     }
 
     switch ($order) {
         case SORT_ASC:
-            asort($sortable_array);
+            //ksort($new_array);
             break;
         case SORT_DESC:
-            arsort($sortable_array);
+            krsort($new_array);
             break;
-    }
-
-    foreach ($sortable_array as $k => $v) {
-        $new_array[] = $array[$k];
     }
 
     return $new_array;

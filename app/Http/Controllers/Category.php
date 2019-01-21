@@ -20,10 +20,7 @@ class Category extends Controller
 {
     public function index()
     {
-        $data = CategoryModel::orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
-        $data = $data->toArray();
-        self::$data['tree_view'] = (new TreeView())->index($data);
-        return view('category/index',self::$data);
+
     }
 
     public function operate()
