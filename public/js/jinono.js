@@ -384,47 +384,6 @@
                     UIkit.notification({message: d.msg, status: 'danger',timeout:1000});
                 });
             }
-        },
-        tree_view:{
-            init:function () {
-                $('.treeView .tree_grow').click(jinono.tree_view.addForm);
-                $('.treeView li:first-child .uk-button').click(jinono.tree_view.upForm);
-                $('.treeView ul .uk-button').click(jinono.tree_view.upForm);
-                $('.treeView .tree_retract').click(jinono.tree_view.retract);
-            },
-            addForm:function () {
-                var json_str = $(this).parent().attr('data-v');
-                var data = JSON.parse(json_str);
-                for (var key in data){
-                    $('input[name="'+key+'"]').val('').placeholder = key;
-                }
-                $('#form h2').text("添加节点");
-                $('#form .uk-button-danger').css('visibility','hidden');
-            },
-            upForm:function () {
-                var json_str = $(this).parent().attr('data-v');
-                var data = JSON.parse(json_str);
-                for (var key in data){
-                    $('input[name="'+key+'"]').val(data[key]);
-                }
-                $('#form h2').text("修改节点");
-                $('#form .uk-button-danger').css('visibility','visible');
-            },
-            delete:function () {
-                
-            },
-            retract:function () {
-                var sign = $(this).attr('data-sign');
-                if(sign == 1){
-                    $(this).find('span').attr('uk-icon','icon: plus-circle; ratio: 0.7');
-                    $(this).parent().siblings().css('display','none');
-                    $(this).attr('data-sign','0');
-                    return;
-                }
-                $(this).find('span').attr('uk-icon','icon: minus-circle; ratio: 0.7');
-                $(this).parent().siblings().css('display','block');
-                $(this).attr('data-sign','1');
-            }
         }
     };
 
