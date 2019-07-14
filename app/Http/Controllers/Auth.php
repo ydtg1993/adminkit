@@ -41,7 +41,7 @@ class Auth extends Controller
             if ($user['password'] != $pass) {
                 return self::$RESPONSE->result(4002);
             }
-            UserActive::restore($user);
+            UserActive::store($user);
             return self::$RESPONSE->result(0);
         }
 

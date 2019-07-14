@@ -18,9 +18,8 @@ class UserActive
      * @return bool
      * @throws \Exception
      */
-    public static function restore($user_info)
+    public static function store($user_info)
     {
-        UserModel::upInfoWhere(['last_login_time'=>Carbon::today()->toDateString()]);
         return session(['administrator'=>json_encode($user_info)]);
     }
 
