@@ -33,7 +33,7 @@ class Menu
                 }
 
                 $routes[] = [
-                    'controller' => basename($action['controller']),
+                    'controller' => basename(str_replace("\\","/",$action['controller'])),
                     'uri' => $value->uri
                 ];
             }

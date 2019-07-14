@@ -315,7 +315,7 @@ function createToken()
  */
 function packPassword($password, $token)
 {
-    return md5($password . DIRECTORY_SEPARATOR . $token);
+    return md5($password . 'admin-kit' . $token);
 }
 
 /**

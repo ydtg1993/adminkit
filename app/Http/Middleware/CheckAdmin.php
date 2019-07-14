@@ -39,7 +39,7 @@ class CheckAdmin
         }
 
         $request_info = $request->route()->getAction();;
-        $slug = basename($request_info['controller']);
+        $slug = basename(str_replace("\\","/",$request_info['controller']));
         Controller::$data['slug'] = $slug;
         $slug_info = explode('@',$slug);
         $controller = $slug_info[0];

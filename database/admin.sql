@@ -128,6 +128,6 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (10000, 'hikki', 'admin', 'b2f9e74b64c1ecc46044d71f643a7b7c', 'd566d09f30d217a2d344e0578f62e098', '2018-11-02 10:12:31', '2018-12-27 17:03:17', '2018-10-18 14:45:23');
+INSERT INTO `users` VALUES (10000, 'hikki', 'admin', 'b222ffe7c7deb8d45a85ef32c9854691', 'd566d09f30d217a2d344e0578f62e098', '2018-11-02 10:12:31', '2018-12-27 17:03:17', '2018-10-18 14:45:23');
 
 SET FOREIGN_KEY_CHECKS = 1;
