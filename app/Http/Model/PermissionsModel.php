@@ -15,9 +15,9 @@ class PermissionsModel extends BaseModel
 
     public static function getAllInIds(array $where = [],array $ids = [],$order_by = 'id',$sort = 'ASC')
     {
-        return self::where($where)
+        return (self::where($where)
             ->whereIn('id',$ids)
             ->orderBy($order_by, $sort)
-            ->get()->toArray();
+            ->get())->toArray();
     }
 }
