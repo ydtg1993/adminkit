@@ -15,4 +15,4 @@
    `默认账号: admin 密码: 123456`
    
 ![示例图](https://github.com/ydtg1993/adminkit/blob/master/public/img/example.PNG) 
-https://docs.google.com/spreadsheets/d/1kiSVm2iFhD-iAUfUQcn11-yXlPRwB-YQsuXytMRPQ9s/edit#gid=0
+
